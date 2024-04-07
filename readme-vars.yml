@@ -202,7 +202,7 @@ full_custom_readme: |
   * Shell access whilst the container is running:
 
       ```bash
-      docker exec -it socket-proxy /bin/bash
+      docker exec -it socket-proxy /bin/sh
       ```
 
   * To monitor the logs of the container in realtime:
@@ -283,7 +283,6 @@ full_custom_readme: |
       docker rm socket-proxy
       ```
 
-  * Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
   * You can also remove the old dangling images:
 
       ```bash
