@@ -9,13 +9,7 @@
 [![GitHub](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=linuxserver.io&message=GitHub&logo=github)](https://github.com/linuxserver "view the source for all of our repositories.")
 [![Open Collective](https://img.shields.io/opencollective/all/linuxserver.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Supporters&logo=open%20collective)](https://opencollective.com/linuxserver "please consider helping us by either donating or contributing to our budget")
 
-The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring:
-
-* regular and timely application updates
-* easy user mappings (PGID, PUID)
-* custom base image with s6 overlay
-* weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
-* regular security updates
+The [LinuxServer.io](https://linuxserver.io) team brings you another container release.
 
 Find us at:
 
@@ -108,17 +102,13 @@ services:
       - SYSTEM=0 #optional
       - TASKS=0 #optional
       - VOLUMES=0 #optional
+      - DISABLE_IPV6=0 #optional
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
+    read_only: true
     tmpfs:
       - /run
-    networks:
-      - portainer-dockerproxy
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges=true
-    read_only: true
 ```
 
 ### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
@@ -153,8 +143,11 @@ docker run -d \
   -e SYSTEM=0 `#optional` \
   -e TASKS=0 `#optional` \
   -e VOLUMES=0 `#optional` \
+  -e DISABLE_IPV6=0 `#optional` \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --restart unless-stopped \
+  --read-only \
+  --tmpfs /run \
   lscr.io/linuxserver/socket-proxy:latest
 ```
 
@@ -191,7 +184,10 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e SYSTEM=0` | `/system` |
 | `-e TASKS=0` | `/tasks` |
 | `-e VOLUMES=0` | `/volumes` |
-| `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container |
+| `-e DISABLE_IPV6=0` | Set to `1` to disable IPv6 bindings in scenarios where the host cannot support it. |
+| `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
+| `--read-only` | Make the container filesystem read-only. |
+| `--tmpfs /run` | Mount /run to tmpfs (RAM) to make it writeable. |
 
 ## Support Info
 
