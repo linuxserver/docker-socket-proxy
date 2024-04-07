@@ -177,7 +177,7 @@ full_custom_readme: |
   | `-e CONTAINERS=0` | `/containers` |
   | `-e ALLOW_START=0` | `/containers/id/start` |
   | `-e ALLOW_STOP=0` | `/containers/id/stop` |
-  | `-e ALLOW_RESTARTS=0` | `/containers/id/stop|restart|kill` |
+  | `-e ALLOW_RESTARTS=0` | `/containers/id/stop`, `/containers/id/restart`, and `/containers/id/kill` |
   | `-e DISTRIBUTION=0` | `/distribution` |
   | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
   | `-e IMAGES=0` | `/images` |
