@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1
 
-FROM haproxy:lts-alpine
+ARG HAPROXY_VERSION
+
+FROM haproxy:${HAPROXY_VERSION}-alpine
 
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG HAPROXY_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thespad"
 
