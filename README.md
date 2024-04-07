@@ -108,10 +108,17 @@ services:
       - SYSTEM=0 #optional
       - TASKS=0 #optional
       - VOLUMES=0 #optional
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
-    read_only: true
     tmpfs:
       - /run
+    networks:
+      - portainer-dockerproxy
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges=true
+    read_only: true
 ```
 
 ### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
@@ -146,9 +153,8 @@ docker run -d \
   -e SYSTEM=0 `#optional` \
   -e TASKS=0 `#optional` \
   -e VOLUMES=0 `#optional` \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --restart unless-stopped \
-  --read-only \
-  --tmpfs /run \
   lscr.io/linuxserver/socket-proxy:latest
 ```
 
@@ -158,8 +164,6 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `--read-only` | Make container filesystem read-only. |
-| `--tmpfs /run` | Mount `/run` to tmpfs (RAM) to make it writeable. |
 | `-e EVENTS=1` | `/events` |
 | `-e PING=1` | `/_ping` |
 | `-e VERSION=1` | `/version` |
@@ -172,7 +176,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e CONTAINERS=0` | `/containers` |
 | `-e ALLOW_START=0` | `/containers/id/start` |
 | `-e ALLOW_STOP=0` | `/containers/id/stop` |
-| `-e ALLOW_RESTARTS=0` | `/containers/id/stop|restart|kill` |
+| `-e ALLOW_RESTARTS=0` | `/containers/id/stop`, `/containers/id/restart`, and `/containers/id/kill` |
 | `-e DISTRIBUTION=0` | `/distribution` |
 | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
 | `-e IMAGES=0` | `/images` |
@@ -187,13 +191,14 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e SYSTEM=0` | `/system` |
 | `-e TASKS=0` | `/tasks` |
 | `-e VOLUMES=0` | `/volumes` |
+| `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container |
 
 ## Support Info
 
 * Shell access whilst the container is running:
 
     ```bash
-    docker exec -it socket-proxy /bin/bash
+    docker exec -it socket-proxy /bin/sh
     ```
 
 * To monitor the logs of the container in realtime:
@@ -274,7 +279,6 @@ Below are the instructions for updating containers:
     docker rm socket-proxy
     ```
 
-* Recreate a new container with the same docker run parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
 * You can also remove the old dangling images:
 
     ```bash

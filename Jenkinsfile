@@ -26,7 +26,7 @@ pipeline {
     PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
     DIST_IMAGE = 'alpine'
     MULTIARCH='true'
-    CI='true'
+    CI='false'
     CI_WEB='false'
     CI_PORT='2375'
     CI_SSL='false'
