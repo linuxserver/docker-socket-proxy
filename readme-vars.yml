@@ -111,8 +111,6 @@ full_custom_readme: |
       restart: unless-stopped
       tmpfs:
         - /run
-      networks:
-        - portainer-dockerproxy
       restart: unless-stopped
       security_opt:
         - no-new-privileges=true
