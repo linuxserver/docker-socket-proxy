@@ -112,15 +112,17 @@ full_custom_readme: |
         - SYSTEM=0 #optional
         - TASKS=0 #optional
         - VOLUMES=0 #optional
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock:ro
       restart: unless-stopped
-    tmpfs:
-      - /run
-    networks:
-      - portainer-dockerproxy
-    restart: unless-stopped
-    security_opt:
-      - no-new-privileges=true
-    read_only: true
+      tmpfs:
+        - /run
+      networks:
+        - portainer-dockerproxy
+      restart: unless-stopped
+      security_opt:
+        - no-new-privileges=true
+      read_only: true
   ```
 
   ### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
@@ -155,6 +157,7 @@ full_custom_readme: |
     -e SYSTEM=0 `#optional` \
     -e TASKS=0 `#optional` \
     -e VOLUMES=0 `#optional` \
+    -v /var/run/docker.sock:/var/run/docker.sock:ro \
     --restart unless-stopped \
     lscr.io/linuxserver/socket-proxy:latest
   ```
@@ -192,6 +195,7 @@ full_custom_readme: |
   | `-e SYSTEM=0` | `/system` |
   | `-e TASKS=0` | `/tasks` |
   | `-e VOLUMES=0` | `/volumes` |
+  | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container |
 
   ## Support Info
 
