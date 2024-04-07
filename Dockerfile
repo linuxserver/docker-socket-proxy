@@ -2,7 +2,7 @@
 
 ARG HAPROXY_VERSION
 
-FROM haproxy:${HAPROXY_VERSION}-alpine
+FROM haproxy:${HAPROXY_VERSION:-lts}-alpine
 
 # set version label
 ARG BUILD_DATE
