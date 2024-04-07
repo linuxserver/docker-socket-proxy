@@ -6,7 +6,7 @@ external_type: na
 custom_version_command: "docker run --rm quay.io/skopeo/stable:v1 inspect docker://docker.io/haproxy:lts-alpine | jq -r '.Env[] | select(startswith(\"HAPROXY_VERSION\")) | split(\"=\")[1]'"
 release_type: stable
 release_tag: latest
-ls_branch: master
+ls_branch: main
 build_armhf: false
 repo_vars:
   - BUILD_VERSION_ARG = 'HAPROXY_VERSION'

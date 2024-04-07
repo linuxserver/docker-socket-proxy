@@ -4,26 +4,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  external-trigger-master:
+  external-trigger-main:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4.1.1
 
       - name: External Trigger
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         run: |
-          if [ -n "${{ secrets.PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MASTER }}" ]; then
-            echo "**** Github secret PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MASTER is set; skipping trigger. ****"
-            echo "Github secret \`PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MASTER\` is set; skipping trigger." >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ secrets.PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MAIN }}" ]; then
+            echo "**** Github secret PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MAIN is set; skipping trigger. ****"
+            echo "Github secret \`PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MAIN\` is set; skipping trigger." >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
-          echo "**** External trigger running off of master branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MASTER\". ****"
-          echo "External trigger running off of master branch. To disable this trigger, set a Github secret named \`PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MASTER\`" >> $GITHUB_STEP_SUMMARY
+          echo "**** External trigger running off of main branch. To disable this trigger, set a Github secret named \"PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MAIN\". ****"
+          echo "External trigger running off of main branch. To disable this trigger, set a Github secret named \`PAUSE_EXTERNAL_TRIGGER_SOCKET_PROXY_MAIN\`" >> $GITHUB_STEP_SUMMARY
           echo "**** Retrieving external version ****"
           EXT_RELEASE=$(docker run --rm quay.io/skopeo/stable:v1 inspect docker://docker.io/haproxy:lts-alpine | jq -r '.Env[] | select(startswith("HAPROXY_VERSION")) | split("=")[1]')
           if [ -z "${EXT_RELEASE}" ] || [ "${EXT_RELEASE}" == "null" ]; then
             echo "**** Can't retrieve external version, exiting ****"
-            FAILURE_REASON="Can't retrieve external version for socket-proxy branch master"
+            FAILURE_REASON="Can't retrieve external version for socket-proxy branch main"
             GHA_TRIGGER_URL="https://github.com/linuxserver/docker-socket-proxy/actions/runs/${{ github.run_id }}"
             curl -X POST -H "Content-Type: application/json" --data '{"avatar_url": "https://cdn.discordapp.com/avatars/354986384542662657/df91181b3f1cf0ef1592fbe18e0962d7.png","embeds": [{"color": 16711680,
               "description": "**Trigger Failed** \n**Reason:** '"${FAILURE_REASON}"' \n**Trigger URL:** '"${GHA_TRIGGER_URL}"' \n"}],
@@ -73,7 +73,7 @@ jobs:
             echo "**** Version ${EXT_RELEASE} already pushed, exiting ****"
             echo "Version ${EXT_RELEASE} already pushed, exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
-          elif [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-socket-proxy/job/master/lastBuild/api/json | jq -r '.building') == "true" ]; then
+          elif [ $(curl -s https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-socket-proxy/job/main/lastBuild/api/json | jq -r '.building') == "true" ]; then
             echo "**** New version ${EXT_RELEASE} found; but there already seems to be an active build on Jenkins; exiting ****"
             echo "New version ${EXT_RELEASE} found; but there already seems to be an active build on Jenkins; exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
@@ -81,7 +81,7 @@ jobs:
             echo "**** New version ${EXT_RELEASE} found; old version was ${IMAGE_VERSION}. Triggering new build ****"
             echo "New version ${EXT_RELEASE} found; old version was ${IMAGE_VERSION}. Triggering new build" >> $GITHUB_STEP_SUMMARY
             response=$(curl -iX POST \
-              https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-socket-proxy/job/master/buildWithParameters?PACKAGE_CHECK=false \
+              https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-socket-proxy/job/main/buildWithParameters?PACKAGE_CHECK=false \
               --user ${{ secrets.JENKINS_USER }}:${{ secrets.JENKINS_TOKEN }} | grep -i location | sed "s|^[L|l]ocation: \(.*\)|\1|")
             echo "**** Jenkins job queue url: ${response%$'\r'} ****"
             echo "**** Sleeping 10 seconds until job starts ****"
