@@ -1,0 +1,62 @@
+server {
+    listen 2375 default_server;
+    listen [::]:2375 default_server;
+
+    server_name _;
+
+    set $dockersocket $SOCKET_PATH;
+    set $path_restarts $ALLOW_RESTARTS;
+    set $path_stop $ALLOW_STOP;
+    set $path_start $ALLOW_START;
+    set $path_auth $AUTH;
+    set $path_build $BUILD;
+    set $path_commit $COMMIT;
+    set $path_configs $CONFIGS;
+    set $path_containers $CONTAINERS;
+    set $path_distribution $DISTRIBUTION;
+    set $path_events $EVENTS;
+    set $path_exec $EXEC;
+    set $path_images $IMAGES;
+    set $path_info $INFO;
+    set $path_networks $NETWORKS;
+    set $path_nodes $NODES;
+    set $path_ping $PING;
+    set $path_plugins $PLUGINS;
+    set $path_secrets $SECRETS;
+    set $path_services $SERVICES;
+    set $path_session $SESSION;
+    set $path_swarm $SWARM;
+    set $path_system $SYSTEM;
+    set $path_tasks $TASKS;
+    set $path_version $VERSION;
+    set $path_volumes $VOLUMES;
+
+    include /etc/nginx/proxy.conf;
+
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/((stop)|(restart)|(kill)) {if ($path_restarts = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/start {if ($path_start = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stop {if ($path_stop = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/auth {if ($path_auth = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/build {if ($path_build = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/commit {if ($path_commit = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/configs {if ($path_configs = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers {if ($path_containers = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/distribution {if ($path_distribution = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/events {if ($path_events = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/exec {if ($path_exec = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images {if ($path_images  = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/info {if ($path_info = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks {if ($path_networks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/nodes {if ($path_nodes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/_ping {if ($path_ping = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins {if ($path_plugins = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/secrets {if ($path_secrets = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services {if ($path_services = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/session {if ($path_session = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm {if ($path_swarm = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/system {if ($path_system = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/tasks {if ($path_tasks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/version {if ($path_version = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/volumes {if ($path_volumes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+
+}
