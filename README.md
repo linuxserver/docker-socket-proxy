@@ -32,9 +32,9 @@ Find us at:
 [![Docker Stars](https://img.shields.io/docker/stars/linuxserver/socket-proxy.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=stars&logo=docker)](https://hub.docker.com/r/linuxserver/socket-proxy)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.linuxserver.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-socket-proxy%2Fjob%2Fmain%2F&logo=jenkins)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-socket-proxy/job/main/)
 
-[Socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) is a security-enhanced proxy for the Docker Socket.
+Socket proxy is a security-enhanced proxy for the Docker Socket.
 
-[![socket-proxy](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/docker-logo.png)](https://github.com/Tecnativa/docker-socket-proxy)
+![socket-proxy](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/docker-logo.png)
 
 ## Supported Architectures
 
@@ -52,9 +52,9 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-This container is a fork of [https://github.com/Tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) and as such does not follow our usual container conventions. It *does not* support mods or custom scripts/services, or running as a user other than root (or the docker user in a rootless environment).
+This container is based on [https://github.com/Tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) and as such does not follow our usual container conventions. It *does not* support mods or custom scripts/services, or running as a user other than root (or the docker user in a rootless environment).
 
-The container should be run on the same docker network as the service(s) using it. Most containers that would normally connect to a mounted docker.sock can have their endpoint overridden using the `DOCKER_HOST` environment variable if they do not offer the option in their configuration; it should typically be pointed to tcp://socket-proxy:2375.
+The container should be run on the same docker network as the service(s) using it. Most containers that would normally connect to a mounted docker.sock can have their endpoint overridden using the `DOCKER_HOST` environment variable if they do not offer the option in their configuration; it should typically be pointed to `tcp://socket-proxy:2375`.
 
 * Never expose this container's port to a public network. It should be treated the same way you would treat the docker socket or TCP endpoint.
 * Revoke access to any API section that you consider your service should not need.
@@ -74,34 +74,32 @@ services:
     image: lscr.io/linuxserver/socket-proxy:latest
     container_name: socket-proxy
     environment:
-      - EVENTS=1 #optional
-      - PING=1 #optional
-      - VERSION=1 #optional
+      - ALLOW_START=0 #optional
+      - ALLOW_STOP=0 #optional
+      - ALLOW_RESTARTS=0 #optional
       - AUTH=0 #optional
-      - SECRETS=0 #optional
-      - POST=0 #optional
       - BUILD=0 #optional
       - COMMIT=0 #optional
       - CONFIGS=0 #optional
       - CONTAINERS=0 #optional
-      - ALLOW_START=0 #optional
-      - ALLOW_STOP=0 #optional
-      - ALLOW_RESTARTS=0 #optional
       - DISTRIBUTION=0 #optional
+      - EVENTS=1 #optional
       - EXEC=0 #optional
       - IMAGES=0 #optional
       - INFO=0 #optional
-      - LOG_LEVEL=info #optional
       - NETWORKS=0 #optional
       - NODES=0 #optional
+      - PING=1 #optional
+      - POST=0 #optional
       - PLUGINS=0 #optional
+      - SECRETS=0 #optional
       - SERVICES=0 #optional
       - SESSION=0 #optional
       - SWARM=0 #optional
       - SYSTEM=0 #optional
       - TASKS=0 #optional
+      - VERSION=1 #optional
       - VOLUMES=0 #optional
-      - DISABLE_IPV6=0 #optional
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
@@ -115,34 +113,32 @@ services:
 ```bash
 docker run -d \
   --name=socket-proxy \
-  -e EVENTS=1 `#optional` \
-  -e PING=1 `#optional` \
-  -e VERSION=1 `#optional` \
+  -e ALLOW_START=0 `#optional` \
+  -e ALLOW_STOP=0 `#optional` \
+  -e ALLOW_RESTARTS=0 `#optional` \
   -e AUTH=0 `#optional` \
-  -e SECRETS=0 `#optional` \
-  -e POST=0 `#optional` \
   -e BUILD=0 `#optional` \
   -e COMMIT=0 `#optional` \
   -e CONFIGS=0 `#optional` \
   -e CONTAINERS=0 `#optional` \
-  -e ALLOW_START=0 `#optional` \
-  -e ALLOW_STOP=0 `#optional` \
-  -e ALLOW_RESTARTS=0 `#optional` \
   -e DISTRIBUTION=0 `#optional` \
+  -e EVENTS=1 `#optional` \
   -e EXEC=0 `#optional` \
   -e IMAGES=0 `#optional` \
   -e INFO=0 `#optional` \
-  -e LOG_LEVEL=info `#optional` \
   -e NETWORKS=0 `#optional` \
   -e NODES=0 `#optional` \
+  -e PING=1 `#optional` \
+  -e POST=0 `#optional` \
   -e PLUGINS=0 `#optional` \
+  -e SECRETS=0 `#optional` \
   -e SERVICES=0 `#optional` \
   -e SESSION=0 `#optional` \
   -e SWARM=0 `#optional` \
   -e SYSTEM=0 `#optional` \
   -e TASKS=0 `#optional` \
+  -e VERSION=1 `#optional` \
   -e VOLUMES=0 `#optional` \
-  -e DISABLE_IPV6=0 `#optional` \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --restart unless-stopped \
   --read-only \
@@ -156,34 +152,32 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-e EVENTS=1` | `/events` |
-| `-e PING=1` | `/_ping` |
-| `-e VERSION=1` | `/version` |
+| `-e ALLOW_START=0` | `/containers/id/start` |
+| `-e ALLOW_STOP=0` | `/containers/id/stop` |
+| `-e ALLOW_RESTARTS=0` | `/containers/id/stop`, `/containers/id/restart`, and `/containers/id/kill` |
 | `-e AUTH=0` | `/auth` |
-| `-e SECRETS=0` | `/secrets` |
-| `-e POST=0` | When set to `0`, only `GET` and `HEAD` operations are allowed, making API access read-only. |
 | `-e BUILD=0` | `/build` |
 | `-e COMMIT=0` | `/commit` |
 | `-e CONFIGS=0` | `/configs` |
 | `-e CONTAINERS=0` | `/containers` |
-| `-e ALLOW_START=0` | `/containers/id/start` |
-| `-e ALLOW_STOP=0` | `/containers/id/stop` |
-| `-e ALLOW_RESTARTS=0` | `/containers/id/stop`, `/containers/id/restart`, and `/containers/id/kill` |
 | `-e DISTRIBUTION=0` | `/distribution` |
+| `-e EVENTS=1` | `/events` |
 | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
 | `-e IMAGES=0` | `/images` |
 | `-e INFO=0` | `/info` |
-| `-e LOG_LEVEL=info` | Default value is `info`. Possible values are: `debug`, `info`, `notice`, `warning`, `err`, `crit`, `alert`, and `emerg`. |
 | `-e NETWORKS=0` | `/networks` |
 | `-e NODES=0` | `/nodes` |
+| `-e PING=1` | `/_ping` |
 | `-e PLUGINS=0` | `/plugins` |
+| `-e POST=0` | When set to `0`, only `GET` and `HEAD` operations are allowed, making API access read-only. |
+| `-e SECRETS=0` | `/secrets` |
 | `-e SERVICES=0` | `/services` |
 | `-e SESSION=0` | `/session` |
 | `-e SWARM=0` | `/swarm` |
 | `-e SYSTEM=0` | `/system` |
 | `-e TASKS=0` | `/tasks` |
+| `-e VERSION=1` | `/version` |
 | `-e VOLUMES=0` | `/volumes` |
-| `-e DISABLE_IPV6=0` | Set to `1` to disable IPv6 bindings in scenarios where the host cannot support it. |
 | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
 | `--read-only` | Make the container filesystem read-only. |
 | `--tmpfs /run` | Mount /run to tmpfs (RAM) to make it writeable. |
@@ -307,4 +301,5 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **08.04.24:** - Use nginx due to haproxy's wonky websockets handling.
 * **07.04.24:** - Initial Release.

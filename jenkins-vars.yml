@@ -2,14 +2,13 @@
 
 # jenkins variables
 project_name: docker-socket-proxy
-external_type: na
-custom_version_command: "docker run --rm quay.io/skopeo/stable:v1 inspect docker://docker.io/haproxy:lts-alpine | jq -r '.Env[] | select(startswith(\"HAPROXY_VERSION\")) | split(\"=\")[1]'"
+external_type: alpine_repo
 release_type: stable
 release_tag: latest
 ls_branch: main
 build_armhf: false
 repo_vars:
-  - BUILD_VERSION_ARG = 'HAPROXY_VERSION'
+  - BUILD_VERSION_ARG = 'NGINX_VERSION'
   - LS_USER = 'linuxserver'
   - LS_REPO = 'docker-socket-proxy'
   - CONTAINER_NAME = 'socket-proxy'
@@ -17,6 +16,9 @@ repo_vars:
   - DEV_DOCKERHUB_IMAGE = 'lsiodev/socket-proxy'
   - PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
   - DIST_IMAGE = 'alpine'
+  - DIST_TAG = '3.19'
+  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.19/main/'
+  - DIST_REPO_PACKAGES = 'nginx'
   - MULTIARCH='true'
   - CI='false'
   - CI_WEB='false'
