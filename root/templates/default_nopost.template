@@ -44,9 +44,9 @@ server {
     location ~* ^(/v[\d\.]+)?/distribution {limit_except GET HEAD {deny all;}if ($path_distribution = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/events {limit_except GET HEAD {deny all;}if ($path_events = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/exec {limit_except GET HEAD {deny all;}if ($path_exec = 0){return 403;}proxy_pass http://unix:$dockersocket;}
-    location ~* ^(/v[\d\.]+)?/images {limit_except GET HEAD {deny all;}if ($path_images  = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images {limit_except GET HEAD {deny all;}if ($path_images = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/info {limit_except GET HEAD {deny all;}if ($path_info = 0){return 403;}proxy_pass http://unix:$dockersocket;}
-    location ~* ^(/v[\d\.]+)?/networks {if ($path_networks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks {limit_except GET HEAD {deny all;}if ($path_networks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/nodes {limit_except GET HEAD {deny all;}if ($path_nodes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/_ping {limit_except GET HEAD {deny all;}if ($path_ping = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/plugins {limit_except GET HEAD {deny all;}if ($path_plugins = 0){return 403;}proxy_pass http://unix:$dockersocket;}

@@ -44,7 +44,7 @@ server {
     location ~* ^(/v[\d\.]+)?/distribution {if ($path_distribution = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/events {if ($path_events = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/exec {if ($path_exec = 0){return 403;}proxy_pass http://unix:$dockersocket;}
-    location ~* ^(/v[\d\.]+)?/images {if ($path_images  = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images {if ($path_images = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/info {if ($path_info = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/networks {if ($path_networks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/nodes {if ($path_nodes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
