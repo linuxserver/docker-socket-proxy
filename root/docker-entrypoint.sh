@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ $POST == 1 ]] && [[ $DISABLE_IPv6 == 1 ]]; then
+if [[ $POST == 1 ]] && [[ $DISABLE_IPV6 == 1 ]]; then
     envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_post_ipv4.template > /run/default.conf
-elif [[ $POST == 0 ]] && [[ $DISABLE_IPv6 == 1 ]]; then
+elif [[ $POST == 0 ]] && [[ $DISABLE_IPV6 == 1 ]]; then
     envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_nopost_ipv4.template > /run/default.conf
 elif [[ $POST == 1 ]]; then
     envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_post.template > /run/default.conf
