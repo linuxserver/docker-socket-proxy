@@ -52,7 +52,7 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-This container is based on [https://github.com/Tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) and as such does not follow our usual container conventions. It *does not* support mods or custom scripts/services, or running as a user other than root (or the docker user in a rootless environment).
+This container is based on [https://github.com/Tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) and as such does not follow our usual container conventions. It *does not* support mods or custom scripts/services, or running as a user other than root (or the docker user in a rootless environment). It is designed to act as a drop-in replacement for the Tecnativa container.
 
 The container should be run on the same docker network as the service(s) using it. Most containers that would normally connect to a mounted docker.sock can have their endpoint overridden using the `DOCKER_HOST` environment variable if they do not offer the option in their configuration; it should typically be pointed to `tcp://socket-proxy:2375`.
 
@@ -63,9 +63,9 @@ The container should be run on the same docker network as the service(s) using i
 
 ## Usage
 
-To help you get started creating a container from this image you can either use docker-compose or the docker cli.
+To help you get started creating a container from this image you can either use docker compose or the docker cli.
 
-### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
+### docker compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker compose))
 
 ```yaml
 ---
@@ -82,6 +82,7 @@ services:
       - COMMIT=0 #optional
       - CONFIGS=0 #optional
       - CONTAINERS=0 #optional
+      - DISABLE_IPV6=0 #optional
       - DISTRIBUTION=0 #optional
       - EVENTS=1 #optional
       - EXEC=0 #optional
@@ -122,6 +123,7 @@ docker run -d \
   -e CONFIGS=0 `#optional` \
   -e CONTAINERS=0 `#optional` \
   -e DISTRIBUTION=0 `#optional` \
+  -e DISABLE_IPV6=0 `#optional` \
   -e EVENTS=1 `#optional` \
   -e EXEC=0 `#optional` \
   -e IMAGES=0 `#optional` \
@@ -152,15 +154,16 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-e ALLOW_START=0` | `/containers/id/start` |
-| `-e ALLOW_STOP=0` | `/containers/id/stop` |
-| `-e ALLOW_RESTARTS=0` | `/containers/id/stop`, `/containers/id/restart`, and `/containers/id/kill` |
+| `-e ALLOW_START=0` | `/containers/{id}/start` |
+| `-e ALLOW_STOP=0` | `/containers/{id}/stop` |
+| `-e ALLOW_RESTARTS=0` | `/containers/{id}/stop`, `/containers/{id}/restart`, and `/containers/{id}/kill` |
 | `-e AUTH=0` | `/auth` |
 | `-e BUILD=0` | `/build` |
 | `-e COMMIT=0` | `/commit` |
 | `-e CONFIGS=0` | `/configs` |
 | `-e CONTAINERS=0` | `/containers` |
 | `-e DISTRIBUTION=0` | `/distribution` |
+| `-e DISABLE_IPV6=0` | Set to `1` to prevent nginx binding to the IPv6 interface for legacy system that cannot support IPv6. |
 | `-e EVENTS=1` | `/events` |
 | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
 | `-e IMAGES=0` | `/images` |
@@ -220,26 +223,26 @@ Below are the instructions for updating containers:
     * All images:
 
         ```bash
-        docker-compose pull
+        docker compose pull
         ```
 
     * Single image:
 
         ```bash
-        docker-compose pull socket-proxy
+        docker compose pull socket-proxy
         ```
 
 * Update containers:
     * All containers:
 
         ```bash
-        docker-compose up -d
+        docker compose up -d
         ```
 
     * Single container:
 
         ```bash
-        docker-compose up -d socket-proxy
+        docker compose up -d socket-proxy
         ```
 
 * You can also remove the old dangling images:
@@ -301,5 +304,6 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **15.04.24:** - Allow disabling IPv6 support for legacy devices.
 * **08.04.24:** - Use nginx due to haproxy's wonky websockets handling.
 * **07.04.24:** - Initial Release.

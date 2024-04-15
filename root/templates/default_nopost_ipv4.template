@@ -1,0 +1,61 @@
+server {
+    listen 2375 default_server;
+
+    server_name _;
+
+    set $dockersocket $SOCKET_PATH;
+    set $path_restarts $ALLOW_RESTARTS;
+    set $path_stop $ALLOW_STOP;
+    set $path_start $ALLOW_START;
+    set $path_auth $AUTH;
+    set $path_build $BUILD;
+    set $path_commit $COMMIT;
+    set $path_configs $CONFIGS;
+    set $path_containers $CONTAINERS;
+    set $path_distribution $DISTRIBUTION;
+    set $path_events $EVENTS;
+    set $path_exec $EXEC;
+    set $path_images $IMAGES;
+    set $path_info $INFO;
+    set $path_networks $NETWORKS;
+    set $path_nodes $NODES;
+    set $path_ping $PING;
+    set $path_plugins $PLUGINS;
+    set $path_secrets $SECRETS;
+    set $path_services $SERVICES;
+    set $path_session $SESSION;
+    set $path_swarm $SWARM;
+    set $path_system $SYSTEM;
+    set $path_tasks $TASKS;
+    set $path_version $VERSION;
+    set $path_volumes $VOLUMES;
+
+    include /etc/nginx/proxy.conf;
+
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/((stop)|(restart)|(kill)) {limit_except GET HEAD {deny all;}if ($path_restarts = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/start {limit_except GET HEAD {deny all;}if ($path_start = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stop {limit_except GET HEAD {deny all;}if ($path_stop = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/auth {limit_except GET HEAD {deny all;}if ($path_auth = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/build {limit_except GET HEAD {deny all;}if ($path_build = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/commit {limit_except GET HEAD {deny all;}if ($path_commit = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/configs {limit_except GET HEAD {deny all;}if ($path_configs = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers {limit_except GET HEAD {deny all;}if ($path_containers = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/distribution {limit_except GET HEAD {deny all;}if ($path_distribution = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/events {limit_except GET HEAD {deny all;}if ($path_events = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/exec {limit_except GET HEAD {deny all;}if ($path_exec = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images {limit_except GET HEAD {deny all;}if ($path_images = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/info {limit_except GET HEAD {deny all;}if ($path_info = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks {limit_except GET HEAD {deny all;}if ($path_networks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/nodes {limit_except GET HEAD {deny all;}if ($path_nodes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/_ping {limit_except GET HEAD {deny all;}if ($path_ping = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins {limit_except GET HEAD {deny all;}if ($path_plugins = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/secrets {limit_except GET HEAD {deny all;}if ($path_secrets = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services {limit_except GET HEAD {deny all;}if ($path_services = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/session {limit_except GET HEAD {deny all;}if ($path_session = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm {limit_except GET HEAD {deny all;}if ($path_swarm = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/system {limit_except GET HEAD {deny all;}if ($path_system = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/tasks {limit_except GET HEAD {deny all;}if ($path_tasks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/version {limit_except GET HEAD {deny all;}if ($path_version = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/volumes {limit_except GET HEAD {deny all;}if ($path_volumes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+
+}
