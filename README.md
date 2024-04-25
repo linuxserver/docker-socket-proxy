@@ -65,7 +65,7 @@ The container should be run on the same docker network as the service(s) using i
 
 To help you get started creating a container from this image you can either use docker compose or the docker cli.
 
-### docker compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker compose))
+### docker compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
 ```yaml
 ---
