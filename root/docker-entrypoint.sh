@@ -27,8 +27,13 @@ echo '
 To support LSIO projects visit:
 https://www.linuxserver.io/donate/
 
+───────────────────────────────────────'
+if [[ -f /build_version ]]; then
+    cat /build_version
+    echo '
 ───────────────────────────────────────
-'
+    '
+fi
 
 echo "[ls.io-init] done."
 
