@@ -29,7 +29,7 @@ pipeline {
     DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.20/main/'
     DIST_REPO_PACKAGES = 'nginx'
     MULTIARCH='true'
-    CI='false'
+    CI='true'
     CI_WEB='false'
     CI_PORT='2375'
     CI_SSL='false'
