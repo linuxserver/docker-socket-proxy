@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM docker.io/alpine:3.19
+FROM docker.io/alpine:3.20
 
 # set version label
 ARG BUILD_DATE
@@ -46,13 +46,14 @@ RUN \
     curl \
     envsubst && \
   if [ -z ${NGINX_VERSION+x} ]; then \
-  NGINX_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.19/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+  NGINX_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.20/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
     && awk '/^P:nginx$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://'); \
   fi && \
   apk add --no-cache \
     nginx==${NGINX_VERSION} && \
-    rm -f /etc/nginx/conf.d/stream.conf && \
-    rm -f /etc/nginx/http.d/default.conf
+  printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
+  rm -f /etc/nginx/conf.d/stream.conf && \
+  rm -f /etc/nginx/http.d/default.conf
 
 # add local files
 COPY root/ /

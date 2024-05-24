@@ -304,6 +304,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **24.05.24:** - Rebase to Alpine 3.20.
 * **15.04.24:** - Allow disabling IPv6 support for legacy devices.
 * **08.04.24:** - Use nginx due to haproxy's wonky websockets handling.
 * **07.04.24:** - Initial Release.
