@@ -58,5 +58,6 @@ server {
     location ~* ^(/v[\d\.]+)?/tasks {limit_except GET HEAD {deny all;}if ($path_tasks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/version {limit_except GET HEAD {deny all;}if ($path_version = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/volumes {limit_except GET HEAD {deny all;}if ($path_volumes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location / {return 403;}
 
 }
