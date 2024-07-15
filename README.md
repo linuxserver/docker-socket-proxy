@@ -61,6 +61,10 @@ The container should be run on the same docker network as the service(s) using i
 * To see the versions of the API your Docker daemon and client support, use `docker version` and check the `API version`.
 * [Read the docs](https://docs.docker.com/engine/api/) for the API version you are using for an explanation of all the available endpoints.
 
+## Read-Only Operation
+
+This image can be run with a read-only container filesystem. For details please [read the docs](https://docs.linuxserver.io/misc/read-only/).
+
 ## Usage
 
 To help you get started creating a container from this image you can either use docker compose or the docker cli.
