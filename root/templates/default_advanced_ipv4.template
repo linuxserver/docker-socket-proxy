@@ -1,0 +1,205 @@
+server {
+    listen 2375 default_server;
+
+    server_name _;
+
+    set $dockersocket $SOCKET_PATH;
+    set $path_ping $PING;
+    set $path_auth $AUTH;
+    set $path_build $BUILD;
+    set $path_build_prune $BUILD_PRUNE;
+    set $path_commit $COMMIT;
+    set $path_configs $CONFIGS;
+    set $path_configs_create $CONFIGS_CREATE;
+    set $path_configs_id $CONFIGS_ID;
+    set $path_configs_id_update $CONFIGS_ID_UPDATE;
+    set $path_containers_create $CONTAINERS_CREATE;
+    set $path_containers_json $CONTAINERS_JSON;
+    set $path_containers_prune $CONTAINERS_PRUNE;
+    set $path_containers_id $CONTAINERS_ID;
+    set $path_containers_id_archive $CONTAINERS_ID_ARCHIVE;
+    set $path_containers_id_attach $CONTAINERS_ID_ATTACH;
+    set $path_containers_id_attach_ws $CONTAINERS_ID_ATTACH_WS;
+    set $path_containers_id_changes $CONTAINERS_ID_CHANGES;
+    set $path_containers_id_exec $CONTAINERS_ID_EXEC;
+    set $path_containers_id_export $CONTAINERS_ID_EXPORT;
+    set $path_containers_id_json $CONTAINERS_ID_JSON;
+    set $path_containers_id_kill $CONTAINERS_ID_KILL;
+    set $path_containers_id_logs $CONTAINERS_ID_LOGS;
+    set $path_containers_id_pause $CONTAINERS_ID_PAUSE;
+    set $path_containers_id_rename $CONTAINERS_ID_RENAME;
+    set $path_containers_id_resize $CONTAINERS_ID_RESIZE;
+    set $path_containers_id_restart $CONTAINERS_ID_RESTART;
+    set $path_containers_id_start $CONTAINERS_ID_START;
+    set $path_containers_id_stats $CONTAINERS_ID_STATS;
+    set $path_containers_id_stop $CONTAINERS_ID_STOP;
+    set $path_containers_id_top $CONTAINERS_ID_TOP;
+    set $path_containers_id_unpause $CONTAINERS_ID_UNPAUSE;
+    set $path_containers_id_update $CONTAINERS_ID_UPDATE;
+    set $path_containers_id_wait $CONTAINERS_ID_WAIT;
+    set $path_distribution_name_json $DISTRIBUTION_NAME_JSON;
+    set $path_events $EVENTS;
+    set $path_exec_id_json $EXEC_ID_JSON;
+    set $path_exec_id_resize $EXEC_ID_RESIZE;
+    set $path_exec_id_start $EXEC_ID_START;
+    set $path_images_create $IMAGES_CREATE;
+    set $path_images_get $IMAGES_GET;
+    set $path_images_json $IMAGES_JSON;
+    set $path_images_load $IMAGES_LOAD;
+    set $path_images_prune $IMAGES_PRUNE;
+    set $path_images_search $IMAGES_SEARCH;
+    set $path_images_name $IMAGES_NAME;
+    set $path_images_name_get $IMAGES_NAME_GET;
+    set $path_images_name_history $IMAGES_NAME_HISTORY;
+    set $path_images_name_json $IMAGES_NAME_JSON;
+    set $path_images_name_push $IMAGES_NAME_PUSH;
+    set $path_images_name_tag $IMAGES_NAME_TAG;
+    set $path_info $INFO;
+    set $path_networks $NETWORKS;
+    set $path_networks_create $NETWORKS_CREATE;
+    set $path_networks_prune $NETWORKS_PRUNE;
+    set $path_networks_id $NETWORKS_ID;
+    set $path_networks_id_connect $NETWORKS_ID_CONNECT;
+    set $path_networks_id_disconnect $NETWORKS_ID_DISCONNECT;
+    set $path_nodes $NODES;
+    set $path_nodes_id $NODES_ID;
+    set $path_nodes_id_update $NODES_ID_UPDATE;
+    set $path_plugins $PLUGINS;
+    set $path_plugins_create $PLUGINS_CREATE;
+    set $path_plugins_privileges $PLUGINS_PRIVILEGES;
+    set $path_plugins_pull $PLUGINS_PULL;
+    set $path_plugins_name $PLUGINS_NAME;
+    set $path_plugins_name_disable $PLUGINS_NAME_DISABLE;
+    set $path_plugins_name_enable $PLUGINS_NAME_ENABLE;
+    set $path_plugins_name_json $PLUGINS_NAME_JSON;
+    set $path_plugins_name_push $PLUGINS_NAME_PUSH;
+    set $path_plugins_name_set $PLUGINS_NAME_SET;
+    set $path_plugins_name_upgrade $PLUGINS_NAME_UPGRADE;
+    set $path_secrets $SECRETS;
+    set $path_secrets_create $SECRETS_CREATE;
+    set $path_secrets_id $SECRETS_ID;
+    set $path_secrets_id_update $SECRETS_ID_UPDATE;
+    set $path_services $SERVICES;
+    set $path_services_create $SERVICES_CREATE;
+    set $path_services_id $SERVICES_ID;
+    set $path_services_id_logs $SERVICES_ID_LOGS;
+    set $path_services_id_update $SERVICES_ID_UPDATE;
+    set $path_session $SESSION;
+    set $path_swarm $SWARM;
+    set $path_swarm_init $SWARM_INIT;
+    set $path_swarm_join $SWARM_JOIN;
+    set $path_swarm_leave $SWARM_LEAVE;
+    set $path_swarm_unlock $SWARM_UNLOCK;
+    set $path_swarm_unlockkey $SWARM_UNLOCKKEY;
+    set $path_swarm_update $SWARM_UPDATE;
+    set $path_system_df $SYSTEM_DF;
+    set $path_tasks $TASKS;
+    set $path_tasks_id $TASKS_ID;
+    set $path_tasks_id_logs $TASKS_ID_LOGS;
+    set $path_version $VERSION;
+    set $path_volumes $VOLUMES;
+    set $path_volumes_create $VOLUMES_CREATE;
+    set $path_volumes_prune $VOLUMES_PRUNE;
+    set $path_volumes_name $VOLUMES_NAME;
+
+    include /etc/nginx/proxy.conf;
+
+    location ~* ^(/v[\d\.]+)?/_ping {limit_except GET {deny all;}if ($path_ping = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/auth {limit_except POST {deny all;}if ($path_auth = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/build {limit_except POST {deny all;}if ($path_build = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/build/prune {limit_except POST {deny all;}if ($path_build_prune = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/commit {limit_except POST {deny all;}if ($path_commit = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/configs {limit_except GET {deny all;}if ($path_configs = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/configs/create {limit_except POST {deny all;}if ($path_configs_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/configs/[a-zA-Z0-9_.-]+/update {limit_except POST {deny all;}if ($path_configs_id_update = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/configs/[a-zA-Z0-9_.-]+ {limit_except GET {deny all;}if ($path_configs_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/create {limit_except POST {deny all;}if ($path_containers_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/json {limit_except GET {deny all;}if ($path_containers_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/prune {limit_except POST {deny all;}if ($path_containers_prune = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/archive {limit_except HEAD {deny all;}if ($path_containers_id_archive = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/attach {limit_except POST {deny all;}if ($path_containers_id_attach = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/attach/ws {limit_except GET {deny all;}if ($path_containers_id_attach_ws = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/changes {limit_except GET {deny all;}if ($path_containers_id_changes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/exec {limit_except POST {deny all;}if ($path_containers_id_exec = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/export {limit_except GET {deny all;}if ($path_containers_id_export = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/json {limit_except GET {deny all;}if ($path_containers_id_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/kill {limit_except POST {deny all;}if ($path_containers_id_kill = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/logs {limit_except GET {deny all;}if ($path_containers_id_logs = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/pause {limit_except POST {deny all;}if ($path_containers_id_pause = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/rename {limit_except POST {deny all;}if ($path_containers_id_rename = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/resize {limit_except POST {deny all;}if ($path_containers_id_resize = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/restart {limit_except POST {deny all;}if ($path_containers_id_restart = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/start {limit_except POST {deny all;}if ($path_containers_id_start = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stats {limit_except GET {deny all;}if ($path_containers_id_stats = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stop {limit_except POST {deny all;}if ($path_containers_id_stop = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/top {limit_except GET {deny all;}if ($path_containers_id_top = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/unpause {limit_except POST {deny all;}if ($path_containers_id_unpause = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/update {limit_except POST {deny all;}if ($path_containers_id_update = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/wait {limit_except POST {deny all;}if ($path_containers_id_wait = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+ {limit_except DELETE {deny all;}if ($path_containers_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/distribution/.+/json {limit_except GET {deny all;}if ($path_distribution_name_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/events {limit_except GET {deny all;}if ($path_events = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/exec/[a-zA-Z0-9_.-]+/json {limit_except GET {deny all;}if ($path_exec_id_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/exec/[a-zA-Z0-9_.-]+/resize {limit_except POST {deny all;}if ($path_exec_id_resize = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/exec/[a-zA-Z0-9_.-]+/start {limit_except POST {deny all;}if ($path_exec_id_start = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/create {limit_except POST {deny all;}if ($path_images_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/get {limit_except GET {deny all;}if ($path_images_get = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/json {limit_except GET {deny all;}if ($path_images_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/load {limit_except POST {deny all;}if ($path_images_load = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/prune {limit_except POST {deny all;}if ($path_images_prune = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/search {limit_except GET {deny all;}if ($path_images_search = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/.+/get {limit_except GET {deny all;}if ($path_images_name_get = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/.+/history {limit_except GET {deny all;}if ($path_images_name_history = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/.+/json {limit_except GET {deny all;}if ($path_images_name_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/.+/push {limit_except POST {deny all;}if ($path_images_name_push = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/.+/tag {limit_except POST {deny all;}if ($path_images_name_tag = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/images/.+ {limit_except DELETE {deny all;}if ($path_images_name = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/info {limit_except GET {deny all;}if ($path_info = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks {limit_except GET {deny all;}if ($path_networks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks/create {limit_except POST {deny all;}if ($path_networks_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks/prune {limit_except POST {deny all;}if ($path_networks_prune = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks/[a-zA-Z0-9_.-]+/connect {limit_except POST {deny all;}if ($path_networks_id_connect = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks/[a-zA-Z0-9_.-]+/disconnect {limit_except POST {deny all;}if ($path_networks_id_disconnect = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/networks/[a-zA-Z0-9_.-]+ {limit_except GET {deny all;}if ($path_networks_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/nodes {limit_except GET {deny all;}if ($path_nodes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/nodes/[a-zA-Z0-9_.-]+/update {limit_except POST {deny all;}if ($path_nodes_id_update = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/nodes/[a-zA-Z0-9_.-]+ {limit_except GET {deny all;}if ($path_nodes_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins {limit_except GET {deny all;}if ($path_plugins = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/create {limit_except POST {deny all;}if ($path_plugins_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/privileges {limit_except GET {deny all;}if ($path_plugins_privileges = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/pull {limit_except POST {deny all;}if ($path_plugins_pull = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+/disable {limit_except POST {deny all;}if ($path_plugins_name_disable = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+/enable {limit_except POST {deny all;}if ($path_plugins_name_enable = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+/json {limit_except GET {deny all;}if ($path_plugins_name_json = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+/push {limit_except POST {deny all;}if ($path_plugins_name_push = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+/set {limit_except POST {deny all;}if ($path_plugins_name_set = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+/upgrade {limit_except POST {deny all;}if ($path_plugins_name_upgrade = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/plugins/.+ {limit_except DELETE {deny all;}if ($path_plugins_name = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/secrets {limit_except GET {deny all;}if ($path_secrets = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/secrets/create {limit_except POST {deny all;}if ($path_secrets_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/secrets/[a-zA-Z0-9_.-]+/update {limit_except POST {deny all;}if ($path_secrets_id_update = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/secrets/[a-zA-Z0-9_.-]+ {limit_except GET {deny all;}if ($path_secrets_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services {limit_except GET {deny all;}if ($path_services = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services/create {limit_except POST {deny all;}if ($path_services_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services/[a-zA-Z0-9_.-]+/logs {limit_except GET {deny all;}if ($path_services_id_logs = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services/[a-zA-Z0-9_.-]+/update {limit_except POST {deny all;}if ($path_services_id_update = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/services/[a-zA-Z0-9_.-]+ {limit_except GET {deny all;}if ($path_services_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/session {limit_except POST {deny all;}if ($path_session = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm {limit_except GET {deny all;}if ($path_swarm = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm/init {limit_except POST {deny all;}if ($path_swarm_init = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm/join {limit_except POST {deny all;}if ($path_swarm_join = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm/leave {limit_except POST {deny all;}if ($path_swarm_leave = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm/unlock {limit_except POST {deny all;}if ($path_swarm_unlock = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm/unlockkey {limit_except GET {deny all;}if ($path_swarm_unlockkey = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/swarm/update {limit_except POST {deny all;}if ($path_swarm_update = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/system/df {limit_except GET {deny all;}if ($path_system_df = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/tasks {limit_except GET {deny all;}if ($path_tasks = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/tasks/[a-zA-Z0-9_.-]+/logs {limit_except GET {deny all;}if ($path_tasks_id_logs = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/tasks/[a-zA-Z0-9_.-]+ {limit_except GET {deny all;}if ($path_tasks_id = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/version {limit_except GET {deny all;}if ($path_version = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/volumes {limit_except GET {deny all;}if ($path_volumes = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/volumes/create {limit_except POST {deny all;}if ($path_volumes_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/volumes/prune {limit_except POST {deny all;}if ($path_volumes_prune = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/volumes/.+ {limit_except GET {deny all;}if ($path_volumes_name = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location / {return 403;}
+}
