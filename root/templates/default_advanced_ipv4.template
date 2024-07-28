@@ -201,5 +201,6 @@ server {
     location ~* ^(/v[\d\.]+)?/volumes/create {limit_except POST {deny all;}if ($path_volumes_create = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/volumes/prune {limit_except POST {deny all;}if ($path_volumes_prune = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/volumes/.+ {limit_except GET {deny all;}if ($path_volumes_name = 0){return 403;}proxy_pass http://unix:$dockersocket;}
-    location / {return 403;}
+    location / {return 403;} 
+ 
 }
