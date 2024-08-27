@@ -11,10 +11,10 @@ busybox-binsh           1.36.1-r29        apk
 c-ares                  1.28.1-r0         apk     
 ca-certificates         20240705-r0       apk     
 ca-certificates-bundle  20240705-r0       apk     
-curl                    8.9.0-r0          apk     
+curl                    8.9.1-r0          apk     
 gettext-envsubst        0.22.5-r0         apk     
 libcrypto3              3.3.1-r3          apk     
-libcurl                 8.9.0-r0          apk     
+libcurl                 8.9.1-r0          apk     
 libidn2                 2.3.7-r0          apk     
 libintl                 0.22.5-r0         apk     
 libncursesw             6.4_p20240420-r0  apk     
