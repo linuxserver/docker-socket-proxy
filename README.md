@@ -158,9 +158,9 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-e ALLOW_START=0` | `/containers/{id}/start` |
-| `-e ALLOW_STOP=0` | `/containers/{id}/stop` |
-| `-e ALLOW_RESTARTS=0` | `/containers/{id}/stop`, `/containers/{id}/restart`, and `/containers/{id}/kill` |
+| `-e ALLOW_START=0` | `/containers/{id}/start` - **This option will work even if `POST=0`** |
+| `-e ALLOW_STOP=0` | `/containers/{id}/stop` - **This option will work even if `POST=0`** |
+| `-e ALLOW_RESTARTS=0` | `/containers/{id}/stop`, `/containers/{id}/restart`, and `/containers/{id}/kill` - **This option will work even if `POST=0`** |
 | `-e AUTH=0` | `/auth` |
 | `-e BUILD=0` | `/build` |
 | `-e COMMIT=0` | `/commit` |
@@ -308,6 +308,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.08.24:** - Change `ALLOW_START`, `ALLOW_STOP`, and `ALLOW_RESTARTS` to work even with `POST=0`.
 * **24.05.24:** - Rebase to Alpine 3.20.
 * **15.04.24:** - Allow disabling IPv6 support for legacy devices.
 * **08.04.24:** - Use nginx due to haproxy's wonky websockets handling.

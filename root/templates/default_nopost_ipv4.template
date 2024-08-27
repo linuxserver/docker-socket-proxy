@@ -32,9 +32,9 @@ server {
 
     include /etc/nginx/proxy.conf;
 
-    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/((stop)|(restart)|(kill)) {limit_except GET HEAD {deny all;}if ($path_restarts = 0){return 403;}proxy_pass http://unix:$dockersocket;}
-    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/start {limit_except GET HEAD {deny all;}if ($path_start = 0){return 403;}proxy_pass http://unix:$dockersocket;}
-    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stop {limit_except GET HEAD {deny all;}if ($path_stop = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/((stop)|(restart)|(kill)) {if ($path_restarts = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/start {if ($path_start = 0){return 403;}proxy_pass http://unix:$dockersocket;}
+    location ~* ^(/v[\d\.]+)?/containers/[a-zA-Z0-9_.-]+/stop {if ($path_stop = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/auth {limit_except GET HEAD {deny all;}if ($path_auth = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/build {limit_except GET HEAD {deny all;}if ($path_build = 0){return 403;}proxy_pass http://unix:$dockersocket;}
     location ~* ^(/v[\d\.]+)?/commit {limit_except GET HEAD {deny all;}if ($path_commit = 0){return 403;}proxy_pass http://unix:$dockersocket;}
