@@ -2,7 +2,7 @@ NAME                    VERSION           TYPE
 alpine-baselayout       3.6.5-r0          apk     
 alpine-baselayout-data  3.6.5-r0          apk     
 alpine-keys             2.4-r1            apk     
-alpine-release          3.20.2-r0         apk     
+alpine-release          3.20.3-r0         apk     
 apk-tools               2.14.4-r0         apk     
 bash                    5.2.26-r0         apk     
 brotli-libs             1.1.0-r2          apk     
@@ -13,13 +13,13 @@ ca-certificates         20240705-r0       apk
 ca-certificates-bundle  20240705-r0       apk     
 curl                    8.9.1-r1          apk     
 gettext-envsubst        0.22.5-r0         apk     
-libcrypto3              3.3.1-r3          apk     
+libcrypto3              3.3.2-r0          apk     
 libcurl                 8.9.1-r1          apk     
 libidn2                 2.3.7-r0          apk     
 libintl                 0.22.5-r0         apk     
 libncursesw             6.4_p20240420-r0  apk     
 libpsl                  0.21.5-r1         apk     
-libssl3                 3.3.1-r3          apk     
+libssl3                 3.3.2-r0          apk     
 libunistring            1.2-r0            apk     
 musl                    1.2.5-r0          apk     
 musl-utils              1.2.5-r0          apk     
