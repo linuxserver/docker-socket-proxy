@@ -17,13 +17,13 @@ libcrypto3              3.3.2-r0          apk
 libcurl                 8.11.0-r2         apk     
 libidn2                 2.3.7-r0          apk     
 libintl                 0.22.5-r0         apk     
-libncursesw             6.4_p20240420-r1  apk     
+libncursesw             6.4_p20240420-r2  apk     
 libpsl                  0.21.5-r1         apk     
 libssl3                 3.3.2-r0          apk     
 libunistring            1.2-r0            apk     
 musl                    1.2.5-r0          apk     
 musl-utils              1.2.5-r0          apk     
-ncurses-terminfo-base   6.4_p20240420-r1  apk     
+ncurses-terminfo-base   6.4_p20240420-r2  apk     
 nghttp2-libs            1.62.1-r0         apk     
 nginx                   1.26.2-r0         apk     
 pcre                    8.45-r3           apk     
