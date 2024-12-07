@@ -69,6 +69,9 @@ This image can be run with a read-only container filesystem. For details please 
 
 To help you get started creating a container from this image you can either use docker compose or the docker cli.
 
+>[!NOTE]
+>Unless a parameter is flaged as 'optional', it is *mandatory* and a value must be provided.
+
 ### docker compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
 
 ```yaml
@@ -193,27 +196,27 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 * Shell access whilst the container is running:
 
-    ```bash
-    docker exec -it socket-proxy /bin/sh
-    ```
+```bash
+docker exec -it socket-proxy /bin/sh
+```
 
 * To monitor the logs of the container in realtime:
 
-    ```bash
-    docker logs -f socket-proxy
-    ```
+```bash
+docker logs -f socket-proxy
+```
 
 * Container version number:
 
-    ```bash
-    docker inspect -f '{{ index .Config.Labels "build_version" }}' socket-proxy
-    ```
+```bash
+docker inspect -f '{{ index .Config.Labels "build_version" }}' socket-proxy
+```
 
 * Image version number:
 
-    ```bash
-    docker inspect -f '{{ index .Config.Labels "build_version" }}' lscr.io/linuxserver/socket-proxy:latest
-    ```
+```bash
+docker inspect -f '{{ index .Config.Labels "build_version" }}' lscr.io/linuxserver/socket-proxy:latest
+```
 
 ## Updating Info
 
@@ -224,66 +227,67 @@ Below are the instructions for updating containers:
 ### Via Docker Compose
 
 * Update images:
-    * All images:
+  * All images:
 
-        ```bash
-        docker compose pull
-        ```
+  ```bash
+  docker compose pull
+  ```
 
-    * Single image:
+  * Single image:
 
-        ```bash
-        docker compose pull socket-proxy
-        ```
+  ```bash
+  docker compose pull socket-proxy
+  ```
 
 * Update containers:
-    * All containers:
+  * All containers:
 
-        ```bash
-        docker compose up -d
-        ```
+  ```bash
+  docker compose up -d
+  ```
 
-    * Single container:
+  * Single container:
 
-        ```bash
-        docker compose up -d socket-proxy
-        ```
+  ```bash
+  docker compose up -d socket-proxy
+  ```
 
 * You can also remove the old dangling images:
 
-    ```bash
-    docker image prune
-    ```
+```bash
+docker image prune
+```
 
 ### Via Docker Run
 
 * Update the image:
 
-    ```bash
-    docker pull lscr.io/linuxserver/socket-proxy:latest
-    ```
+```bash
+docker pull lscr.io/linuxserver/socket-proxy:latest
+```
 
 * Stop the running container:
 
-    ```bash
-    docker stop socket-proxy
-    ```
+```bash
+docker stop socket-proxy
+```
 
 * Delete the container:
 
-    ```bash
-    docker rm socket-proxy
-    ```
+```bash
+docker rm socket-proxy
+```
 
 * You can also remove the old dangling images:
 
-    ```bash
-    docker image prune
-    ```
+```bash
+docker image prune
+```
 
 ### Image Update Notifications - Diun (Docker Image Update Notifier)
 
-**tip**: We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
+>[!TIP]
+>We recommend [Diun](https://crazymax.dev/diun/) for update notifications. Other tools that automatically update containers unattended are not recommended or supported.
 
 ## Building locally
 
@@ -308,6 +312,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **05.12.24:** - Rebase to Alpine 3.21.
 * **26.08.24:** - Change `ALLOW_START`, `ALLOW_STOP`, and `ALLOW_RESTARTS` to work even with `POST=0`.
 * **24.05.24:** - Rebase to Alpine 3.20.
 * **15.04.24:** - Allow disabling IPv6 support for legacy devices.

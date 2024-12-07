@@ -6,6 +6,8 @@ external_type: alpine_repo
 release_type: stable
 release_tag: latest
 ls_branch: main
+image_sbom: true
+image_provenance: true
 repo_vars:
   - BUILD_VERSION_ARG = 'NGINX_VERSION'
   - LS_USER = 'linuxserver'
@@ -16,7 +18,7 @@ repo_vars:
   - PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
   - DIST_IMAGE = 'alpine'
   - DIST_TAG = '3.20'
-  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.20/main/'
+  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.21/main/'
   - DIST_REPO_PACKAGES = 'nginx'
   - MULTIARCH='true'
   - CI='true'
