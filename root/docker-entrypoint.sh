@@ -10,6 +10,8 @@ else
     envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_nopost.template > /run/default.conf
 fi
 
+mkdir /run/nginx-tmp
+
 echo '
 ───────────────────────────────────────
 
