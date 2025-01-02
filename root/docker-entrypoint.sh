@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PROXY_READ_TIMEOUT=${PROXY_READ_TIMEOUT:-240}
+
 if [[ $POST == 1 ]] && [[ $DISABLE_IPV6 == 1 ]]; then
     envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_post_ipv4.template > /run/default.conf
 elif [[ $POST == 0 ]] && [[ $DISABLE_IPV6 == 1 ]]; then
