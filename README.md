@@ -98,8 +98,9 @@ services:
       - NETWORKS=0 #optional
       - NODES=0 #optional
       - PING=1 #optional
-      - POST=0 #optional
       - PLUGINS=0 #optional
+      - POST=0 #optional
+      - PROXY_READ_TIMEOUT=240 #optional
       - SECRETS=0 #optional
       - SERVICES=0 #optional
       - SESSION=0 #optional
@@ -138,8 +139,9 @@ docker run -d \
   -e NETWORKS=0 `#optional` \
   -e NODES=0 `#optional` \
   -e PING=1 `#optional` \
-  -e POST=0 `#optional` \
   -e PLUGINS=0 `#optional` \
+  -e POST=0 `#optional` \
+  -e PROXY_READ_TIMEOUT=240 `#optional` \
   -e SECRETS=0 `#optional` \
   -e SERVICES=0 `#optional` \
   -e SESSION=0 `#optional` \
@@ -180,6 +182,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PING=1` | `/_ping` |
 | `-e PLUGINS=0` | `/plugins` |
 | `-e POST=0` | When set to `0`, only `GET` and `HEAD` operations are allowed, making API access read-only. |
+| `-e PROXY_READ_TIMEOUT=240` | Connection timeout when no data is being sent. Useful for tailing quiet containers. Accepts values in s/m/h/d/w, no suffix assumes s. |
 | `-e SECRETS=0` | `/secrets` |
 | `-e SERVICES=0` | `/services` |
 | `-e SESSION=0` | `/session` |
@@ -312,6 +315,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **02.01.25:** - Support custom read timeout values.
 * **05.12.24:** - Rebase to Alpine 3.21.
 * **26.08.24:** - Change `ALLOW_START`, `ALLOW_STOP`, and `ALLOW_RESTARTS` to work even with `POST=0`.
 * **24.05.24:** - Rebase to Alpine 3.20.
