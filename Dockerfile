@@ -5,7 +5,7 @@ FROM docker.io/alpine:3.21
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG NGINX_VERSION
+ARG HAPROXY_VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="thespad"
 
@@ -14,18 +14,19 @@ RUN \
   echo "**** install build packages ****" && \
   apk add --no-cache \
     alpine-release \
-    bash \
-    curl \
-    envsubst && \
-  if [ -z ${NGINX_VERSION+x} ]; then \
-  NGINX_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
-    && awk '/^P:nginx$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://'); \
+    curl && \
+  if [ -z ${HAPROXY_VERSION+x} ]; then \
+  HAPROXY_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
+    && awk '/^P:haproxy$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://'); \
   fi && \
   apk add --no-cache \
-    nginx==${NGINX_VERSION} && \
+    haproxy==${HAPROXY_VERSION} && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
-  rm -f /etc/nginx/conf.d/stream.conf && \
-  rm -f /etc/nginx/http.d/default.conf
+  apk del --no-cache \
+    curl && \
+  rm -rf \
+    /etc/haproxy \
+    /tmp/*
 
 ENV ALLOW_RESTARTS=0 \
   ALLOW_STOP=0 \
@@ -57,7 +58,5 @@ ENV ALLOW_RESTARTS=0 \
 
 # add local files
 COPY root/ /
-
-EXPOSE 2375
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

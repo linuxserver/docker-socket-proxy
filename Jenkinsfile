@@ -19,7 +19,7 @@ pipeline {
     DOCKERHUB_TOKEN=credentials('docker-hub-ci-pat')
     QUAYIO_API_TOKEN=credentials('quayio-repo-api-token')
     GIT_SIGNING_KEY=credentials('484fbca6-9a4f-455e-b9e3-97ac98785f5f')
-    BUILD_VERSION_ARG = 'NGINX_VERSION'
+    BUILD_VERSION_ARG = 'HAPROXY_VERSION'
     LS_USER = 'linuxserver'
     LS_REPO = 'docker-socket-proxy'
     CONTAINER_NAME = 'socket-proxy'
@@ -28,7 +28,7 @@ pipeline {
     PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
     DIST_IMAGE = 'alpine'
     DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.21/main/'
-    DIST_REPO_PACKAGES = 'nginx'
+    DIST_REPO_PACKAGES = 'haproxy'
     MULTIARCH='true'
     CI='true'
     CI_WEB='false'

@@ -52,7 +52,7 @@ The architectures supported by this image are:
 
 ## Application Setup
 
-This container is based on [https://github.com/Tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) and as such does not follow our usual container conventions. It *does not* support mods or custom scripts/services, or running as a user other than root (or the docker user in a rootless environment). It is designed to act as a drop-in replacement for the Tecnativa container.
+This container is conceptually based on [https://github.com/Tecnativa/docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy) and as such does not follow our usual container conventions. It *does not* support mods or custom scripts/services, or running as a user other than root (or the docker user in a rootless environment). It is designed to act as a drop-in replacement for the Tecnativa container.
 
 The container should be run on the same docker network as the service(s) using it. Most containers that would normally connect to a mounted docker.sock can have their endpoint overridden using the `DOCKER_HOST` environment variable if they do not offer the option in their configuration; it should typically be pointed to `tcp://socket-proxy:2375`.
 
@@ -100,7 +100,6 @@ services:
       - PING=1 #optional
       - PLUGINS=0 #optional
       - POST=0 #optional
-      - PROXY_READ_TIMEOUT=240 #optional
       - SECRETS=0 #optional
       - SERVICES=0 #optional
       - SESSION=0 #optional
@@ -141,7 +140,6 @@ docker run -d \
   -e PING=1 `#optional` \
   -e PLUGINS=0 `#optional` \
   -e POST=0 `#optional` \
-  -e PROXY_READ_TIMEOUT=240 `#optional` \
   -e SECRETS=0 `#optional` \
   -e SERVICES=0 `#optional` \
   -e SESSION=0 `#optional` \
@@ -172,7 +170,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e CONFIGS=0` | `/configs` |
 | `-e CONTAINERS=0` | `/containers` |
 | `-e DISTRIBUTION=0` | `/distribution` |
-| `-e DISABLE_IPV6=0` | Set to `1` to prevent nginx binding to the IPv6 interface for legacy system that cannot support IPv6. |
+| `-e DISABLE_IPV6=0` | Set to `1` to prevent binding to the IPv6 interface for legacy system that cannot support IPv6. |
 | `-e EVENTS=1` | `/events` |
 | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
 | `-e IMAGES=0` | `/images` |
@@ -182,7 +180,6 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e PING=1` | `/_ping` |
 | `-e PLUGINS=0` | `/plugins` |
 | `-e POST=0` | When set to `0`, only `GET` and `HEAD` operations are allowed, making API access read-only. |
-| `-e PROXY_READ_TIMEOUT=240` | Connection timeout when no data is being sent. Useful for tailing quiet containers. Accepts values in s/m/h/d/w, no suffix assumes s. |
 | `-e SECRETS=0` | `/secrets` |
 | `-e SERVICES=0` | `/services` |
 | `-e SESSION=0` | `/session` |
@@ -315,6 +312,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **06.04.25:** - Switch back to haproxy for better handling of `docker exec` connection hijacking.
 * **02.01.25:** - Support custom read timeout values.
 * **05.12.24:** - Rebase to Alpine 3.21.
 * **26.08.24:** - Change `ALLOW_START`, `ALLOW_STOP`, and `ALLOW_RESTARTS` to work even with `POST=0`.
