@@ -170,7 +170,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e CONFIGS=0` | `/configs` |
 | `-e CONTAINERS=0` | `/containers` |
 | `-e DISTRIBUTION=0` | `/distribution` |
-| `-e DISABLE_IPV6=0` | Set to `1` to prevent binding to the IPv6 interface for legacy system that cannot support IPv6. |
+| `-e DISABLE_IPV6=0` | Set to `1` to prevent binding to the IPv6 interface for legacy systems that cannot support IPv6. |
 | `-e EVENTS=1` | `/events` |
 | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
 | `-e IMAGES=0` | `/images` |
