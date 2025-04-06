@@ -1,18 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
-export PROXY_READ_TIMEOUT=${PROXY_READ_TIMEOUT:-240}
+mkdir -p /run/haproxy
 
-if [[ $POST == 1 ]] && [[ $DISABLE_IPV6 == 1 ]]; then
-    envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_post_ipv4.template > /run/default.conf
-elif [[ $POST == 0 ]] && [[ $DISABLE_IPV6 == 1 ]]; then
-    envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_nopost_ipv4.template > /run/default.conf
-elif [[ $POST == 1 ]]; then
-    envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_post.template > /run/default.conf
+if [ "${DISABLE_IPV6}" = 1 ]; then
+    BIND_PROTO=":2375"
 else
-    envsubst "$(printf '${%s} ' $(bash -c "compgen -A variable"))" < /templates/default_nopost.template > /run/default.conf
+    BIND_PROTO="[::]:2375 v4v6"
 fi
 
-mkdir /run/nginx-tmp
+sed "s/@@BIND_PROTO@@/${BIND_PROTO}/g" /templates/haproxy.cfg > /run/haproxy/haproxy.cfg
 
 echo '
 ───────────────────────────────────────
@@ -32,7 +28,7 @@ To support LSIO projects visit:
 https://www.linuxserver.io/donate/
 
 ───────────────────────────────────────'
-if [[ -f /build_version ]]; then
+if [ -f /build_version ]; then
     cat /build_version
     echo '
 ───────────────────────────────────────
@@ -41,4 +37,4 @@ fi
 
 echo "[ls.io-init] done."
 
-exec /usr/sbin/nginx -e stderr
+exec /usr/sbin/haproxy -f /run/haproxy/haproxy.cfg -W -db

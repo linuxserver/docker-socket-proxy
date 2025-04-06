@@ -6,10 +6,8 @@ external_type: alpine_repo
 release_type: stable
 release_tag: latest
 ls_branch: main
-image_sbom: true
-image_provenance: true
 repo_vars:
-  - BUILD_VERSION_ARG = 'NGINX_VERSION'
+  - BUILD_VERSION_ARG = 'HAPROXY_VERSION'
   - LS_USER = 'linuxserver'
   - LS_REPO = 'docker-socket-proxy'
   - CONTAINER_NAME = 'socket-proxy'
@@ -18,7 +16,7 @@ repo_vars:
   - PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
   - DIST_IMAGE = 'alpine'
   - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.21/main/'
-  - DIST_REPO_PACKAGES = 'nginx'
+  - DIST_REPO_PACKAGES = 'haproxy'
   - MULTIARCH='true'
   - CI='true'
   - CI_WEB='false'
