@@ -22,8 +22,6 @@ RUN \
   apk add --no-cache \
     haproxy==${HAPROXY_VERSION} && \
   printf "Linuxserver.io version: ${VERSION}\nBuild-date: ${BUILD_DATE}" > /build_version && \
-  apk del --no-cache \
-    curl && \
   rm -rf \
     /etc/haproxy \
     /tmp/*
