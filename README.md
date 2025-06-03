@@ -47,6 +47,7 @@ The architectures supported by this image are:
 | Architecture | Available | Tag |
 | :----: | :----: | ---- |
 | x86-64 | ✅ | amd64-\<version tag\> |
+| riscv64 | ✅ | riscv64-\<version tag\> |
 | arm64 | ✅ | arm64v8-\<version tag\> |
 | armhf | ❌ | |
 
@@ -315,6 +316,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **03.06.25:** - Rebase to Alpine 3.22. Add RISCV support.
 * **08.04.25:** - Add `LOG_LEVEL` back.
 * **06.04.25:** - Switch back to haproxy for better handling of `docker exec` connection hijacking.
 * **02.01.25:** - Support custom read timeout values.

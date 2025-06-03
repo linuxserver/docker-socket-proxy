@@ -6,6 +6,7 @@ external_type: alpine_repo
 release_type: stable
 release_tag: latest
 ls_branch: main
+build_riscv64: true
 repo_vars:
   - BUILD_VERSION_ARG = 'HAPROXY_VERSION'
   - LS_USER = 'linuxserver'
@@ -15,7 +16,7 @@ repo_vars:
   - DEV_DOCKERHUB_IMAGE = 'lsiodev/socket-proxy'
   - PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
   - DIST_IMAGE = 'alpine'
-  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.21/main/'
+  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.22/main/'
   - DIST_REPO_PACKAGES = 'haproxy'
   - MULTIARCH='true'
   - CI='true'
