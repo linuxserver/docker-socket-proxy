@@ -108,6 +108,7 @@ services:
       - SWARM=0 #optional
       - SYSTEM=0 #optional
       - TASKS=0 #optional
+      - TZ=Etc/UTC #optional
       - VERSION=1 #optional
       - VOLUMES=0 #optional
     volumes:
@@ -149,6 +150,7 @@ docker run -d \
   -e SWARM=0 `#optional` \
   -e SYSTEM=0 `#optional` \
   -e TASKS=0 `#optional` \
+  -e TZ=Etc/UTC `#optional` \
   -e VERSION=1 `#optional` \
   -e VOLUMES=0 `#optional` \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
@@ -190,6 +192,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e SWARM=0` | `/swarm` |
 | `-e SYSTEM=0` | `/system` |
 | `-e TASKS=0` | `/tasks` |
+| `-e TZ=Etc/UTC` | `Set container timezone` |
 | `-e VERSION=1` | `/version` |
 | `-e VOLUMES=0` | `/volumes` |
 | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
@@ -316,6 +319,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **19.08.25:** - Add tzdata for localised logging timestamps.
 * **03.06.25:** - Rebase to Alpine 3.22. Add RISCV support.
 * **08.04.25:** - Add `LOG_LEVEL` back.
 * **06.04.25:** - Switch back to haproxy for better handling of `docker exec` connection hijacking.
