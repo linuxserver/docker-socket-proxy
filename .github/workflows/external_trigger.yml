@@ -107,7 +107,7 @@ jobs:
           if [ "${EXT_RELEASE_SANITIZED}" == "${IMAGE_VERSION}" ]; then
             echo "Sanitized version \`${EXT_RELEASE_SANITIZED}\` already pushed, exiting" >> $GITHUB_STEP_SUMMARY
             exit 0
-          elif [[ $(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/APKINDEX.tar.gz" | tar -xz -C /tmp && awk '/^P:'"haproxy"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://') != "${EXT_RELEASE}" ]]; then
+          elif [[ $(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/APKINDEX.tar.gz" | tar -xz -C /tmp && awk '/^P:'"haproxy"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://') != "${EXT_RELEASE}" ]] || [[ $(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.22/main/riscv64/APKINDEX.tar.gz" | tar -xz -C /tmp && awk '/^P:'"haproxy"'$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://') != "${EXT_RELEASE}" ]]; then
             echo "New version \`${EXT_RELEASE}\` found; but not all arch repos updated yet; exiting" >> $GITHUB_STEP_SUMMARY
             FAILURE_REASON="New version ${EXT_RELEASE} for socket-proxy tag latest is detected, however not all arch repos are updated yet. Will try again later."
             curl -X POST -H "Content-Type: application/json" --data '{"avatar_url": "https://cdn.discordapp.com/avatars/354986384542662657/df91181b3f1cf0ef1592fbe18e0962d7.png","embeds": [{"color": 9802903,
