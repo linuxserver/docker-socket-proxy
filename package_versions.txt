@@ -7,7 +7,7 @@ apk-tools               2.14.9-r3    apk
 busybox                 1.37.0-r19   apk     
 busybox-binsh           1.37.0-r19   apk     
 ca-certificates-bundle  20250911-r0  apk     
-haproxy                 3.2.6-r0     apk     
+haproxy                 3.2.7-r0     apk     
 libapk2                 2.14.9-r3    apk     
 libcrypto3              3.5.4-r0     apk     
 libssl3                 3.5.4-r0     apk     
