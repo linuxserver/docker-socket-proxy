@@ -16,7 +16,7 @@ repo_vars:
   - DEV_DOCKERHUB_IMAGE = 'lsiodev/socket-proxy'
   - PR_DOCKERHUB_IMAGE = 'lspipepr/socket-proxy'
   - DIST_IMAGE = 'alpine'
-  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v2.23/main/'
+  - DIST_REPO = 'http://dl-cdn.alpinelinux.org/alpine/v3.23/main/'
   - DIST_REPO_PACKAGES = 'haproxy'
   - MULTIARCH='true'
   - CI='true'
