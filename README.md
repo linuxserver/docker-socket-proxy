@@ -319,6 +319,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **26.12.25:** - Rebase to Alpine 3.23.
 * **19.08.25:** - Add tzdata for localised logging timestamps.
 * **03.06.25:** - Rebase to Alpine 3.22. Add RISCV support.
 * **08.04.25:** - Add `LOG_LEVEL` back.
