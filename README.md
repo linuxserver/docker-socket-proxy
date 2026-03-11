@@ -85,6 +85,8 @@ services:
       - ALLOW_START=0 #optional
       - ALLOW_STOP=0 #optional
       - ALLOW_RESTARTS=0 #optional
+      - ALLOW_PAUSE=0 #optional
+      - ALLOW_RESUME=0 #optional
       - AUTH=0 #optional
       - BUILD=0 #optional
       - COMMIT=0 #optional
@@ -169,6 +171,8 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e ALLOW_START=0` | `/containers/{id}/start` - **This option will work even if `POST=0`** |
 | `-e ALLOW_STOP=0` | `/containers/{id}/stop` - **This option will work even if `POST=0`** |
 | `-e ALLOW_RESTARTS=0` | `/containers/{id}/stop`, `/containers/{id}/restart`, and `/containers/{id}/kill` - **This option will work even if `POST=0`** |
+| `-e ALLOW_PAUSE=0` | `/containers/{id}/pause` - **This option will work even if `POST=0`** |
+| `-e ALLOW_UNPAUSE=0` | `/containers/{id}/unpause` - **This option will work even if `POST=0`** |
 | `-e AUTH=0` | `/auth` |
 | `-e BUILD=0` | `/build` |
 | `-e COMMIT=0` | `/commit` |
@@ -319,6 +323,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **24.02.26:** - Add `ALLOW_PAUSE` and `ALLOW_UNPAUSE`.
 * **26.12.25:** - Rebase to Alpine 3.23.
 * **19.08.25:** - Add tzdata for localised logging timestamps.
 * **03.06.25:** - Rebase to Alpine 3.22. Add RISCV support.
