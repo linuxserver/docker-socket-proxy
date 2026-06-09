@@ -2,10 +2,12 @@
 
 mkdir -p /run/haproxy
 
+PORT=${SOCKET_PROXY_PORT:-2375}
+
 if [ "${DISABLE_IPV6}" = 1 ]; then
-    BIND_PROTO=":2375"
+    BIND_PROTO=":${PORT}"
 else
-    BIND_PROTO="[::]:2375 v4v6"
+    BIND_PROTO="[::]:${PORT} v4v6"
 fi
 
 sed "s/@@BIND_PROTO@@/${BIND_PROTO}/g" /templates/haproxy.cfg > /run/haproxy/haproxy.cfg
