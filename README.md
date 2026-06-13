@@ -62,6 +62,24 @@ The container should be run on the same docker network as the service(s) using i
 * To see the versions of the API your Docker daemon and client support, use `docker version` and check the `API version`.
 * [Read the docs](https://docs.docker.com/engine/api/) for the API version you are using for an explanation of all the available endpoints.
 
+### Podman / libpod API
+
+Podman exposes two API groups on the same socket: the Docker-compatible API (controlled by the existing env vars above) and the libpod-native API prefixed with `/libpod/`. The `LIBPOD_*` environment variables control access to the libpod endpoints independently of their Docker-compat equivalents.
+
+For example, to use [prometheus-podman-exporter](https://github.com/containers/prometheus-podman-exporter), enable:
+
+```yaml
+- LIBPOD_CONTAINERS=1
+- LIBPOD_INFO=1
+- LIBPOD_NETWORKS=1
+- LIBPOD_PODS=1
+- LIBPOD_VOLUMES=1
+- LIBPOD_IMAGES=1
+- LIBPOD_EVENTS=1
+```
+
+Point the exporter at `tcp://socket-proxy:2375` using `CONTAINER_HOST`. `LIBPOD_PING` and `LIBPOD_VERSION` are enabled by default (like their Docker-compat counterparts `PING` and `VERSION`).
+
 ## Read-Only Operation
 
 This image can be run with a read-only container filesystem. For details please [read the docs](https://docs.linuxserver.io/misc/read-only/).
@@ -113,6 +131,31 @@ services:
       - TZ=Etc/UTC #optional
       - VERSION=1 #optional
       - VOLUMES=0 #optional
+      - LIBPOD_ALLOW_PAUSE=0 #optional
+      - LIBPOD_ALLOW_POD_PAUSE=0 #optional
+      - LIBPOD_ALLOW_POD_RESTARTS=0 #optional
+      - LIBPOD_ALLOW_POD_START=0 #optional
+      - LIBPOD_ALLOW_POD_STOP=0 #optional
+      - LIBPOD_ALLOW_POD_UNPAUSE=0 #optional
+      - LIBPOD_ALLOW_RESTARTS=0 #optional
+      - LIBPOD_ALLOW_START=0 #optional
+      - LIBPOD_ALLOW_STOP=0 #optional
+      - LIBPOD_ALLOW_UNPAUSE=0 #optional
+      - LIBPOD_CONTAINERS=0 #optional
+      - LIBPOD_EVENTS=0 #optional
+      - LIBPOD_EXEC=0 #optional
+      - LIBPOD_GENERATE=0 #optional
+      - LIBPOD_IMAGES=0 #optional
+      - LIBPOD_INFO=0 #optional
+      - LIBPOD_MANIFESTS=0 #optional
+      - LIBPOD_NETWORKS=0 #optional
+      - LIBPOD_PING=1 #optional
+      - LIBPOD_PLAY=0 #optional
+      - LIBPOD_PODS=0 #optional
+      - LIBPOD_SECRETS=0 #optional
+      - LIBPOD_SYSTEM=0 #optional
+      - LIBPOD_VERSION=1 #optional
+      - LIBPOD_VOLUMES=0 #optional
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
@@ -157,6 +200,31 @@ docker run -d \
   -e TZ=Etc/UTC `#optional` \
   -e VERSION=1 `#optional` \
   -e VOLUMES=0 `#optional` \
+  -e LIBPOD_ALLOW_PAUSE=0 `#optional` \
+  -e LIBPOD_ALLOW_POD_PAUSE=0 `#optional` \
+  -e LIBPOD_ALLOW_POD_RESTARTS=0 `#optional` \
+  -e LIBPOD_ALLOW_POD_START=0 `#optional` \
+  -e LIBPOD_ALLOW_POD_STOP=0 `#optional` \
+  -e LIBPOD_ALLOW_POD_UNPAUSE=0 `#optional` \
+  -e LIBPOD_ALLOW_RESTARTS=0 `#optional` \
+  -e LIBPOD_ALLOW_START=0 `#optional` \
+  -e LIBPOD_ALLOW_STOP=0 `#optional` \
+  -e LIBPOD_ALLOW_UNPAUSE=0 `#optional` \
+  -e LIBPOD_CONTAINERS=0 `#optional` \
+  -e LIBPOD_EVENTS=0 `#optional` \
+  -e LIBPOD_EXEC=0 `#optional` \
+  -e LIBPOD_GENERATE=0 `#optional` \
+  -e LIBPOD_IMAGES=0 `#optional` \
+  -e LIBPOD_INFO=0 `#optional` \
+  -e LIBPOD_MANIFESTS=0 `#optional` \
+  -e LIBPOD_NETWORKS=0 `#optional` \
+  -e LIBPOD_PING=1 `#optional` \
+  -e LIBPOD_PLAY=0 `#optional` \
+  -e LIBPOD_PODS=0 `#optional` \
+  -e LIBPOD_SECRETS=0 `#optional` \
+  -e LIBPOD_SYSTEM=0 `#optional` \
+  -e LIBPOD_VERSION=1 `#optional` \
+  -e LIBPOD_VOLUMES=0 `#optional` \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --restart unless-stopped \
   --read-only \
@@ -201,6 +269,32 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e TZ=Etc/UTC` | `Set container timezone` |
 | `-e VERSION=1` | `/version` |
 | `-e VOLUMES=0` | `/volumes` |
+| **Podman libpod API** | |
+| `-e LIBPOD_ALLOW_START=0` | `/libpod/containers/{id}/start` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_STOP=0` | `/libpod/containers/{id}/stop` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_RESTARTS=0` | `/libpod/containers/{id}/stop`, `/libpod/containers/{id}/restart`, and `/libpod/containers/{id}/kill` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_PAUSE=0` | `/libpod/containers/{id}/pause` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_UNPAUSE=0` | `/libpod/containers/{id}/unpause` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_POD_START=0` | `/libpod/pods/{name}/start` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_POD_STOP=0` | `/libpod/pods/{name}/stop` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_POD_RESTARTS=0` | `/libpod/pods/{name}/stop`, `/libpod/pods/{name}/restart`, and `/libpod/pods/{name}/kill` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_POD_PAUSE=0` | `/libpod/pods/{name}/pause` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_ALLOW_POD_UNPAUSE=0` | `/libpod/pods/{name}/unpause` - **This option will work even if `POST=0`** |
+| `-e LIBPOD_CONTAINERS=0` | `/libpod/containers` |
+| `-e LIBPOD_EVENTS=0` | `/libpod/events` |
+| `-e LIBPOD_EXEC=0` | `/libpod/exec` |
+| `-e LIBPOD_GENERATE=0` | `/libpod/generate` (systemd/kube YAML generation) |
+| `-e LIBPOD_IMAGES=0` | `/libpod/images` |
+| `-e LIBPOD_INFO=0` | `/libpod/info` |
+| `-e LIBPOD_MANIFESTS=0` | `/libpod/manifests` |
+| `-e LIBPOD_NETWORKS=0` | `/libpod/networks` |
+| `-e LIBPOD_PING=1` | `/libpod/_ping` |
+| `-e LIBPOD_PLAY=0` | `/libpod/play` (kube play) |
+| `-e LIBPOD_PODS=0` | `/libpod/pods` (Podman-specific pod management) |
+| `-e LIBPOD_SECRETS=0` | `/libpod/secrets` |
+| `-e LIBPOD_SYSTEM=0` | `/libpod/system` |
+| `-e LIBPOD_VERSION=1` | `/libpod/version` |
+| `-e LIBPOD_VOLUMES=0` | `/libpod/volumes` |
 | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
 | `--read-only` | Make the container filesystem read-only. |
 | `--tmpfs /run` | Mount /run to tmpfs (RAM) to make it writeable. |
@@ -325,6 +419,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **13.06.26:** - Add libpod API support for Podman via `LIBPOD_*` environment variables.
 * **24.02.26:** - Add `ALLOW_PAUSE` and `ALLOW_UNPAUSE`.
 * **26.12.25:** - Rebase to Alpine 3.23.
 * **19.08.25:** - Add tzdata for localised logging timestamps.
