@@ -419,6 +419,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **15.06.26:** - Rebase to Alpine 3.24.
 * **13.06.26:** - Add libpod API support for Podman via `LIBPOD_*` environment variables.
 * **24.02.26:** - Add `ALLOW_PAUSE` and `ALLOW_UNPAUSE`.
 * **26.12.25:** - Rebase to Alpine 3.23.
