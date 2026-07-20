@@ -17,5 +17,5 @@ musl-utils              1.2.6-r2     apk
 pcre2                   10.47-r1     apk     
 scanelf                 1.3.9-r1     apk     
 ssl_client              1.37.0-r31   apk     
-tzdata                  2026b-r0     apk     
+tzdata                  2026c-r0     apk     
 zlib                    1.3.2-r0     apk     
