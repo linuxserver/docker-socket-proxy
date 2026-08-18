@@ -150,10 +150,15 @@ services:
     image: lscr.io/linuxserver/socket-proxy:latest
     container_name: socket-proxy
     environment:
-      - ALLOW_START=0 #optional
-      - ALLOW_STOP=0 #optional
-      - ALLOW_RESTARTS=0 #optional
+      - ALLOW_ARCHIVE=0 #optional
+      - ALLOW_CHANGES=0 #optional
+      - ALLOW_EXPORT=0 #optional
+      - ALLOW_LOGS=0 #optional
       - ALLOW_PAUSE=0 #optional
+      - ALLOW_RESTARTS=0 #optional
+      - ALLOW_STOP=0 #optional
+      - ALLOW_START=0 #optional
+      - ALLOW_TOP=0 #optional
       - ALLOW_UNPAUSE=0 #optional
       - AUTH=0 #optional
       - BUILD=0 #optional
@@ -181,16 +186,6 @@ services:
       - TZ=Etc/UTC #optional
       - VERSION=1 #optional
       - VOLUMES=0 #optional
-      - LIBPOD_ALLOW_PAUSE=0 #optional
-      - LIBPOD_ALLOW_POD_PAUSE=0 #optional
-      - LIBPOD_ALLOW_POD_RESTARTS=0 #optional
-      - LIBPOD_ALLOW_POD_START=0 #optional
-      - LIBPOD_ALLOW_POD_STOP=0 #optional
-      - LIBPOD_ALLOW_POD_UNPAUSE=0 #optional
-      - LIBPOD_ALLOW_RESTARTS=0 #optional
-      - LIBPOD_ALLOW_START=0 #optional
-      - LIBPOD_ALLOW_STOP=0 #optional
-      - LIBPOD_ALLOW_UNPAUSE=0 #optional
       - LIBPOD_CONTAINERS=0 #optional
       - LIBPOD_EVENTS=0 #optional
       - LIBPOD_EXEC=0 #optional
@@ -219,10 +214,15 @@ services:
 ```bash
 docker run -d \
   --name=socket-proxy \
-  -e ALLOW_START=0 `#optional` \
-  -e ALLOW_STOP=0 `#optional` \
-  -e ALLOW_RESTARTS=0 `#optional` \
+  -e ALLOW_ARCHIVE=0 `#optional` \
+  -e ALLOW_CHANGES=0 `#optional` \
+  -e ALLOW_EXPORT=0 `#optional` \
+  -e ALLOW_LOGS=0 `#optional` \
   -e ALLOW_PAUSE=0 `#optional` \
+  -e ALLOW_RESTARTS=0 `#optional` \
+  -e ALLOW_STOP=0 `#optional` \
+  -e ALLOW_START=0 `#optional` \
+  -e ALLOW_TOP=0 `#optional` \
   -e ALLOW_UNPAUSE=0 `#optional` \
   -e AUTH=0 `#optional` \
   -e BUILD=0 `#optional` \
@@ -250,16 +250,6 @@ docker run -d \
   -e TZ=Etc/UTC `#optional` \
   -e VERSION=1 `#optional` \
   -e VOLUMES=0 `#optional` \
-  -e LIBPOD_ALLOW_PAUSE=0 `#optional` \
-  -e LIBPOD_ALLOW_POD_PAUSE=0 `#optional` \
-  -e LIBPOD_ALLOW_POD_RESTARTS=0 `#optional` \
-  -e LIBPOD_ALLOW_POD_START=0 `#optional` \
-  -e LIBPOD_ALLOW_POD_STOP=0 `#optional` \
-  -e LIBPOD_ALLOW_POD_UNPAUSE=0 `#optional` \
-  -e LIBPOD_ALLOW_RESTARTS=0 `#optional` \
-  -e LIBPOD_ALLOW_START=0 `#optional` \
-  -e LIBPOD_ALLOW_STOP=0 `#optional` \
-  -e LIBPOD_ALLOW_UNPAUSE=0 `#optional` \
   -e LIBPOD_CONTAINERS=0 `#optional` \
   -e LIBPOD_EVENTS=0 `#optional` \
   -e LIBPOD_EXEC=0 `#optional` \
@@ -288,11 +278,16 @@ Containers are configured using parameters passed at runtime (such as those abov
 
 | Parameter | Function |
 | :----: | --- |
-| `-e ALLOW_START=0` | `/containers/{id}/start` - **This option will work even if `POST=0`** |
-| `-e ALLOW_STOP=0` | `/containers/{id}/stop` - **This option will work even if `POST=0`** |
-| `-e ALLOW_RESTARTS=0` | `/containers/{id}/stop`, `/containers/{id}/restart`, and `/containers/{id}/kill` - **This option will work even if `POST=0`** |
-| `-e ALLOW_PAUSE=0` | `/containers/{id}/pause` - **This option will work even if `POST=0`** |
-| `-e ALLOW_UNPAUSE=0` | `/containers/{id}/unpause` - **This option will work even if `POST=0`** |
+| `-e ALLOW_ARCHIVE=0` | `(/libpod)?/(containers|pods)/{id}/archive` - **This option is independent of `POST`** |
+| `-e ALLOW_CHANGES=0` | `(/libpod)?/(containers|pods)/{id}/changes` - **This option is independent of `POST`** |
+| `-e ALLOW_EXPORT=0` | `(/libpod)?/(containers|pods)/{id}/export` - **This option is independent of `POST`** |
+| `-e ALLOW_LOGS=0` | `(/libpod)?/(containers|pods)/{id}/logs` - **This option is independent of `POST`** |
+| `-e ALLOW_PAUSE=0` | `(/libpod)?/(containers|pods)/{id}/pause` - **This option will work even if `POST=0`** |
+| `-e ALLOW_RESTARTS=0` | `(/libpod)?/(containers|pods)/{id}/stop`, `/(/libpod)?/(containers|pods)/{id}/restart`, and `/(/libpod)?/(containers|pods)/{id}/kill` - **This option will work even if `POST=0`** |
+| `-e ALLOW_START=0` | `(/libpod)?/(containers|pods)/{id}/start` - **This option will work even if `POST=0`** |
+| `-e ALLOW_STOP=0` | `(/libpod)?/(containers|pods)/{id}/stop` - **This option will work even if `POST=0`** |
+| `-e ALLOW_TOP=0` | `(/libpod)?/(containers|pods)/{id}/top` - **This option is independent of `POST`** |
+| `-e ALLOW_UNPAUSE=0` | `(/libpod)?/(containers|pods)/{id}/unpause` - **This option will work even if `POST=0`** |
 | `-e AUTH=0` | `/auth` |
 | `-e BUILD=0` | `/build` |
 | `-e COMMIT=0` | `/commit` |
@@ -320,16 +315,6 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e VERSION=1` | `/version` |
 | `-e VOLUMES=0` | `/volumes` |
 | **Podman libpod API** | |
-| `-e LIBPOD_ALLOW_START=0` | `/libpod/containers/{id}/start` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_STOP=0` | `/libpod/containers/{id}/stop` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_RESTARTS=0` | `/libpod/containers/{id}/stop`, `/libpod/containers/{id}/restart`, and `/libpod/containers/{id}/kill` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_PAUSE=0` | `/libpod/containers/{id}/pause` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_UNPAUSE=0` | `/libpod/containers/{id}/unpause` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_POD_START=0` | `/libpod/pods/{name}/start` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_POD_STOP=0` | `/libpod/pods/{name}/stop` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_POD_RESTARTS=0` | `/libpod/pods/{name}/stop`, `/libpod/pods/{name}/restart`, and `/libpod/pods/{name}/kill` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_POD_PAUSE=0` | `/libpod/pods/{name}/pause` - **This option will work even if `POST=0`** |
-| `-e LIBPOD_ALLOW_POD_UNPAUSE=0` | `/libpod/pods/{name}/unpause` - **This option will work even if `POST=0`** |
 | `-e LIBPOD_CONTAINERS=0` | `/libpod/containers` |
 | `-e LIBPOD_EVENTS=0` | `/libpod/events` |
 | `-e LIBPOD_EXEC=0` | `/libpod/exec` |
@@ -469,6 +454,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **18.08.26:** - Add `ALLOW_ARCHIVE`, `ALLOW_CHANGES`, `ALLOW_EXPORT`, `ALLOW_LOGS`, `ALLOW_TOP` options.
 * **15.06.26:** - Rebase to Alpine 3.24.
 * **13.06.26:** - Add libpod API support for Podman via `LIBPOD_*` environment variables.
 * **24.02.26:** - Add `ALLOW_PAUSE` and `ALLOW_UNPAUSE`.
