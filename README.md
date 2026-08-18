@@ -283,7 +283,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e ALLOW_EXPORT=0` | `(/libpod)?/(containers|pods)/{id}/export` - **This option is independent of `POST`** |
 | `-e ALLOW_LOGS=0` | `(/libpod)?/(containers|pods)/{id}/logs` - **This option is independent of `POST`** |
 | `-e ALLOW_PAUSE=0` | `(/libpod)?/(containers|pods)/{id}/pause` - **This option will work even if `POST=0`** |
-| `-e ALLOW_RESTARTS=0` | `(/libpod)?/(containers|pods)/{id}/stop`, `/(/libpod)?/(containers|pods)/{id}/restart`, and `/(/libpod)?/(containers|pods)/{id}/kill` - **This option will work even if `POST=0`** |
+| `-e ALLOW_RESTARTS=0` | `(/libpod)?/(containers|pods)/{id}/stop`, `(/libpod)?/(containers|pods)/{id}/restart`, and `(/libpod)?/(containers|pods)/{id}/kill` - **This option will work even if `POST=0`** |
 | `-e ALLOW_START=0` | `(/libpod)?/(containers|pods)/{id}/start` - **This option will work even if `POST=0`** |
 | `-e ALLOW_STOP=0` | `(/libpod)?/(containers|pods)/{id}/stop` - **This option will work even if `POST=0`** |
 | `-e ALLOW_TOP=0` | `(/libpod)?/(containers|pods)/{id}/top` - **This option is independent of `POST`** |
