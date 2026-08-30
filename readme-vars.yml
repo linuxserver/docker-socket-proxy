@@ -285,16 +285,7 @@ full_custom_readme: |
 
   | Parameter | Function |
   | :----: | --- |
-  | `-e ALLOW_ARCHIVE=0` | `(/libpod)?/(containers∣pods)/{id}/archive` - **This option is independent of `POST`** |
-  | `-e ALLOW_CHANGES=0` | `(/libpod)?/(containers∣pods)/{id}/changes` - **This option is independent of `POST`** |
-  | `-e ALLOW_EXPORT=0` | `(/libpod)?/(containers∣pods)/{id}/export` - **This option is independent of `POST`** |
-  | `-e ALLOW_LOGS=0` | `(/libpod)?/(containers∣pods)/{id}/logs` - **This option is independent of `POST`** |
-  | `-e ALLOW_PAUSE=0` | `(/libpod)?/(containers∣pods)/{id}/pause` - **This option will work even if `POST=0`** |
-  | `-e ALLOW_RESTARTS=0` | `(/libpod)?/(containers∣pods)/{id}/stop`, `(/libpod)?/(containers∣pods)/{id}/restart`, and `(/libpod)?/(containers∣pods)/{id}/kill` - **This option will work even if `POST=0`** |
-  | `-e ALLOW_START=0` | `(/libpod)?/(containers∣pods)/{id}/start` - **This option will work even if `POST=0`** |
-  | `-e ALLOW_STOP=0` | `(/libpod)?/(containers∣pods)/{id}/stop` - **This option will work even if `POST=0`** |
-  | `-e ALLOW_TOP=0` | `(/libpod)?/(containers∣pods)/{id}/top` - **This option is independent of `POST`** |
-  | `-e ALLOW_UNPAUSE=0` | `(/libpod)?/(containers∣pods)/{id}/unpause` - **This option will work even if `POST=0`** |
+  | `-e ALLOW_ARCHIVE=0` | `(/libpod)?/(containers∣pods)/{id}/archive` |
   | `-e AUTH=0` | `/auth` |
   | `-e BUILD=0` | `/build` |
   | `-e COMMIT=0` | `/commit` |
@@ -306,7 +297,7 @@ full_custom_readme: |
   | `-e EXEC=0` | `/exec` & `/containers/{id}/exec` |
   | `-e IMAGES=0` | `/images` |
   | `-e INFO=0` | `/info` |
-  | `-e LOG_LEVEL=info` | Possible values are: debug, info, notice, warning, err, crit, alert and emerg. Defaults to info. |
+  | `-e LOG_LEVEL=info` | Possible values are: `debug`, `info`, `notice`, `warning`, `err`, `crit`, `alert` and `emerg`. Defaults to `info`. |
   | `-e NETWORKS=0` | `/networks` |
   | `-e NODES=0` | `/nodes` |
   | `-e PING=1` | `/_ping` |
@@ -337,6 +328,17 @@ full_custom_readme: |
   | `-e LIBPOD_SYSTEM=0` | `/libpod/system` |
   | `-e LIBPOD_VERSION=1` | `/libpod/version` |
   | `-e LIBPOD_VOLUMES=0` | `/libpod/volumes` |
+  | **These are `GET`-only options (they are not affected by the `POST` option)** | |
+  | `-e ALLOW_CHANGES=0` | `(/libpod)?/(containers∣pods)/{id}/changes` |
+  | `-e ALLOW_EXPORT=0` | `(/libpod)?/(containers∣pods)/{id}/export` |
+  | `-e ALLOW_LOGS=0` | `(/libpod)?/(containers∣pods)/{id}/logs` |
+  | `-e ALLOW_TOP=0` | `(/libpod)?/(containers∣pods)/{id}/top` |
+  | **These options work even when `POST=0`** | |
+  | `-e ALLOW_PAUSE=0` | `(/libpod)?/(containers∣pods)/{id}/pause` |
+  | `-e ALLOW_RESTARTS=0` | `(/libpod)?/(containers∣pods)/{id}/stop`, `(/libpod)?/(containers∣pods)/{id}/restart`, and `(/libpod)?/(containers∣pods)/{id}/kill` |
+  | `-e ALLOW_START=0` | `(/libpod)?/(containers∣pods)/{id}/start` |
+  | `-e ALLOW_STOP=0` | `(/libpod)?/(containers∣pods)/{id}/stop` |
+  | `-e ALLOW_UNPAUSE=0` | `(/libpod)?/(containers∣pods)/{id}/unpause` |
   | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
   | `--read-only` | Make the container filesystem read-only. |
   | `--tmpfs /run` | Mount /run to tmpfs (RAM) to make it writeable. |
