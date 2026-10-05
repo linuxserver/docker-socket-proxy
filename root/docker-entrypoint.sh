@@ -10,6 +10,22 @@ fi
 
 sed "s/@@BIND_PROTO@@/${BIND_PROTO}/g" /templates/haproxy.cfg > /run/haproxy/haproxy.cfg
 
+if [ "${TIMEOUT_CLIENT}" ]; then
+    true
+else
+    TIMEOUT_CLIENT="10"
+fi
+
+sed "s/@@TIMEOUT_CLIENT@@/${TIMEOUT_CLIENT}m/g" /templates/haproxy.cfg > /run/haproxy/haproxy.cfg
+
+if [ "${TIMEOUT_SERVER}" ]; then
+    true
+else
+    TIMEOUT_SERVER="10"
+fi
+
+sed "s/@@TIMEOUT_SERVER@@/${TIMEOUT_SERVER}m/g" /templates/haproxy.cfg > /run/haproxy/haproxy.cfg
+
 echo '
 ───────────────────────────────────────
 
