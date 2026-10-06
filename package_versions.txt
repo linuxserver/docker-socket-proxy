@@ -14,7 +14,7 @@ libssl3                 3.5.8-r0     apk
 lua5.4-libs             5.4.8-r0     apk     
 musl                    1.2.6-r2     apk     
 musl-utils              1.2.6-r2     apk     
-pcre2                   10.48-r0     apk     
+pcre2                   10.49-r0     apk     
 scanelf                 1.3.9-r1     apk     
 ssl_client              1.37.0-r31   apk     
 tzdata                  2026d-r0     apk     
