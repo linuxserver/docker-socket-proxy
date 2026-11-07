@@ -183,7 +183,6 @@ services:
       - SWARM=0 #optional
       - SYSTEM=0 #optional
       - TASKS=0 #optional
-      - TZ=Etc/UTC #optional
       - VERSION=1 #optional
       - VOLUMES=0 #optional
       - LIBPOD_CONTAINERS=0 #optional
@@ -201,6 +200,9 @@ services:
       - LIBPOD_SYSTEM=0 #optional
       - LIBPOD_VERSION=1 #optional
       - LIBPOD_VOLUMES=0 #optional
+      - TIMEOUT_CLIENT=10 #optional
+      - TIMEOUT_SERVER=10 #optional
+      - TZ=Etc/UTC #optional
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     restart: unless-stopped
@@ -265,6 +267,8 @@ docker run -d \
   -e LIBPOD_SYSTEM=0 `#optional` \
   -e LIBPOD_VERSION=1 `#optional` \
   -e LIBPOD_VOLUMES=0 `#optional` \
+  -e TIMEOUT_CLIENT=10 `#optional` \
+  -e TIMEOUT_SERVER=10 `#optional` \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --restart unless-stopped \
   --read-only \
@@ -332,6 +336,10 @@ Containers are configured using parameters passed at runtime (such as those abov
 | `-e ALLOW_START=0` | `(/libpod)?/(containers∣pods)/{id}/start` |
 | `-e ALLOW_STOP=0` | `(/libpod)?/(containers∣pods)/{id}/stop` |
 | `-e ALLOW_UNPAUSE=0` | `(/libpod)?/(containers∣pods)/{id}/unpause` |
+| **These options control HAProxy settings** | |
+| `-e TIMEOUT_CLIENT=10` | Client timeout in minutes |
+| `-e TIMEOUT_SERVER=10` | Server timeout in minutes |
+| **Docker native options** | |
 | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
 | `--read-only` | Make the container filesystem read-only. |
 | `--tmpfs /run` | Mount /run to tmpfs (RAM) to make it writeable. |
@@ -456,6 +464,7 @@ Once registered you can define the dockerfile to use with `-f Dockerfile.aarch64
 
 ## Versions
 
+* **05.10.26:** - Add `TIMEOUT_CLIENT` & `TIMEOUT_SERVER` options.
 * **18.08.26:** - Add `ALLOW_ARCHIVE`, `ALLOW_CHANGES`, `ALLOW_EXPORT`, `ALLOW_LOGS`, `ALLOW_TOP` options.
 * **15.06.26:** - Rebase to Alpine 3.24.
 * **13.06.26:** - Add libpod API support for Podman via `LIBPOD_*` environment variables.
