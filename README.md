@@ -339,7 +339,7 @@ Containers are configured using parameters passed at runtime (such as those abov
 | **These options control HAProxy settings** | |
 | `-e TIMEOUT_CLIENT=10` | Client timeout in minutes |
 | `-e TIMEOUT_SERVER=10` | Server timeout in minutes |
-| **Docker native options** | |
+| **Native docker options** | |
 | `-v /var/run/docker.sock:ro` | Mount the host docker socket into the container. |
 | `--read-only` | Make the container filesystem read-only. |
 | `--tmpfs /run` | Mount /run to tmpfs (RAM) to make it writeable. |
