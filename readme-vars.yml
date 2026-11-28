@@ -158,6 +158,7 @@ full_custom_readme: |
       container_name: socket-proxy
       environment:
         - ALLOW_ARCHIVE=0 #optional
+        - ALLOW_ATTACH=0 #optional
         - ALLOW_CHANGES=0 #optional
         - ALLOW_EXPORT=0 #optional
         - ALLOW_LOGS=0 #optional
@@ -224,6 +225,7 @@ full_custom_readme: |
   docker run -d \
     --name=socket-proxy \
     -e ALLOW_ARCHIVE=0 `#optional` \
+    -e ALLOW_ATTACH=0 `#optional` \
     -e ALLOW_CHANGES=0 `#optional` \
     -e ALLOW_EXPORT=0 `#optional` \
     -e ALLOW_LOGS=0 `#optional` \
@@ -290,6 +292,7 @@ full_custom_readme: |
   | Parameter | Function |
   | :----: | --- |
   | `-e ALLOW_ARCHIVE=0` | `(/libpod)?/(containers∣pods)/{id}/archive` |
+  | `-e ALLOW_ATTACH=0` | `(/libpod)?/containers/{id}/attach` and `/attach/ws`, whatever `POST` is set to |
   | `-e AUTH=0` | `/auth` |
   | `-e BUILD=0` | `/build` |
   | `-e COMMIT=0` | `/commit` |
@@ -471,6 +474,7 @@ full_custom_readme: |
 
   ## Versions
 
+  * **22.11.26:** - Add `ALLOW_ATTACH`; container attach is now denied by default, also with `POST=1`.
   * **05.10.26:** - Add `TIMEOUT_CLIENT` & `TIMEOUT_SERVER` options.
   * **18.08.26:** - Add `ALLOW_ARCHIVE`, `ALLOW_CHANGES`, `ALLOW_EXPORT`, `ALLOW_LOGS`, `ALLOW_TOP` options.
   * **15.06.26:** - Rebase to Alpine 3.24.
